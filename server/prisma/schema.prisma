@@ -1,0 +1,173 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("POSTGRESQL_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     String[]
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Customer {
+  createdAt         DateTime          @default(now())
+  email             String            @unique
+  favoriteCompanies FavoriteCompany[]
+  firstName         String
+  handledCompanies  Company[]
+  id                String            @id @default(cuid())
+  lastName          String
+  lastSeenCompanies LastSeenCompany[]
+  phoneNumber       String?
+  reservations      Reservation[]
+  updatedAt         DateTime          @updatedAt
+}
+
+model Company {
+  address                 Address                  @relation(fields: [addressId], references: [id])
+  addressId               String
+  companySetNotifications CompanySetNotification[]
+  companyType             CompanyType?             @relation(fields: [companyTypeId], references: [id])
+  companyTypeId           String?
+  createdAt               DateTime                 @default(now())
+  favoriteCompanies       FavoriteCompany[]
+  id                      String                   @id @default(cuid())
+  lastSeenCompanies       LastSeenCompany[]
+  logo                    String?
+  name                    String
+  owner                   Customer                 @relation(fields: [ownerId], references: [id])
+  ownerId                 String
+  phoneNumber             String
+  timeSlots               TimeSlot[]
+  updatedAt               DateTime                 @updatedAt
+  vatCode                 String                   @unique
+}
+
+model Address {
+  city         String?
+  companies    Company[]
+  createdAt    DateTime  @default(now())
+  id           String    @id @default(cuid())
+  postalCode   String?
+  province     String?
+  street       String?
+  streetNumber String?
+  updatedAt    DateTime  @updatedAt
+}
+
+model CompanyType {
+  code        String    @unique
+  companies   Company[]
+  createdAt   DateTime  @default(now())
+  description String
+  id          String    @id @default(cuid())
+  updatedAt   DateTime  @updatedAt
+}
+
+model TimeSlot {
+  company               Company                  @relation(fields: [companyId], references: [id])
+  companyId             String
+  createdAt             DateTime                 @default(now())
+  dayOfWeek             DayOfWeek?               @relation(fields: [dayOfWeekId], references: [id])
+  dayOfWeekId           String?
+  id                    String                   @id @default(cuid())
+  maxSeatsAvailable     Int
+  availabilities        ReservableSlot[]
+  timeFrom              String
+  timeSlotNotifications CompanySetNotification[]
+  timeTo                String
+  updatedAt             DateTime                 @updatedAt
+}
+
+model DayOfWeek {
+  code        String     @unique
+  createdAt   DateTime   @default(now())
+  description String
+  id          String     @id @default(cuid())
+  timeSlots   TimeSlot[]
+  updatedAt   DateTime   @updatedAt
+}
+
+model FavoriteCompany {
+  company    Company? @relation(fields: [companyId], references: [id])
+  companyId  String?
+  createdAt  DateTime @default(now())
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String
+  id         String   @id @default(cuid())
+  updatedAt  DateTime @updatedAt
+}
+
+model LastSeenCompany {
+  company    Company?  @relation(fields: [companyId], references: [id])
+  companyId  String?
+  createdAt  DateTime  @default(now())
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId String?
+  id         String    @id @default(cuid())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Reservation {
+  createdAt                DateTime                  @default(now())
+  customer                 Customer                  @relation(fields: [customerId], references: [id])
+  customerId               String
+  id                       String                    @id @default(cuid())
+  reservableSlot           ReservableSlot?           @relation(fields: [reservableSlotId], references: [id])
+  reservableSlotId         String?
+  reservationNotifications ReservationNotification[]
+  updatedAt                DateTime                  @updatedAt
+}
+
+model ReservableSlot {
+  createdAt    DateTime      @default(now())
+  dateTimeFrom DateTime
+  dateTimeTo   DateTime
+  id           String        @id @default(cuid())
+  isActive     Boolean
+  reservations Reservation[]
+  seatsLeft    Int?
+  timeSlot     TimeSlot      @relation(fields: [timeSlotId], references: [id])
+  timeSlotId   String
+  updatedAt    DateTime      @updatedAt
+}
+
+model Notification {
+  companySetNotifications  CompanySetNotification[]
+  createdAt                DateTime                  @default(now())
+  id                       String                    @id @default(cuid())
+  minutesBefore            Int                       @unique
+  reservationNotifications ReservationNotification[]
+  updatedAt                DateTime                  @updatedAt
+}
+
+model CompanySetNotification {
+  company        Company      @relation(fields: [companyId], references: [id])
+  companyId      String
+  createdAt      DateTime     @default(now())
+  id             String       @id @default(cuid())
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  notificationId String
+  timeSlot       TimeSlot?    @relation(fields: [timeSlotId], references: [id])
+  timeSlotId     String?
+  updatedAt      DateTime     @updatedAt
+}
+
+model ReservationNotification {
+  createdAt      DateTime     @default(now())
+  id             String       @id @default(cuid())
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  notificationId String
+  reservation    Reservation  @relation(fields: [reservationId], references: [id])
+  reservationId  String
+  updatedAt      DateTime     @updatedAt
+}

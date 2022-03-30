@@ -1,0 +1,31 @@
+import * as React from "react";
+import {
+  Create,
+  SimpleForm,
+  CreateProps,
+  ReferenceInput,
+  SelectInput,
+} from "react-admin";
+import { CompanyTitle } from "../company/CompanyTitle";
+import { CustomerTitle } from "../customer/CustomerTitle";
+
+export const FavoriteCompanyCreate = (
+  props: CreateProps
+): React.ReactElement => {
+  return (
+    <Create {...props}>
+      <SimpleForm>
+        <ReferenceInput source="company.id" reference="Company" label="Company">
+          <SelectInput optionText={CompanyTitle} />
+        </ReferenceInput>
+        <ReferenceInput
+          source="customer.id"
+          reference="Customer"
+          label="Customer"
+        >
+          <SelectInput optionText={CustomerTitle} />
+        </ReferenceInput>
+      </SimpleForm>
+    </Create>
+  );
+};
