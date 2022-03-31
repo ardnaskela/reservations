@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   List,
   Datagrid,
@@ -6,7 +7,9 @@ import {
   DateField,
   ReferenceField,
   TextField,
+  BooleanField,
 } from "react-admin";
+
 import Pagination from "../Components/Pagination";
 import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
 import { RESERVABLESLOT_TITLE_FIELD } from "../reservableSlot/ReservableSlotTitle";
@@ -30,6 +33,7 @@ export const ReservationList = (props: ListProps): React.ReactElement => {
           <TextField source={CUSTOMER_TITLE_FIELD} />
         </ReferenceField>
         <TextField label="ID" source="id" />
+        <BooleanField label="isAccepted" source="isAccepted" />
         <ReferenceField
           label="ReservableSlot"
           source="reservableslot.id"

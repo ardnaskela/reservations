@@ -17,7 +17,7 @@ export const NotificationCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <ReferenceArrayInput
-          source="companysetnotification"
+          source="companySetNotifications"
           reference="CompanySetNotification"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
@@ -26,7 +26,7 @@ export const NotificationCreate = (props: CreateProps): React.ReactElement => {
         </ReferenceArrayInput>
         <NumberInput step={1} label="minutesBefore" source="minutesBefore" />
         <ReferenceArrayInput
-          source="reservationnotification"
+          source="reservationNotifications"
           reference="ReservationNotification"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

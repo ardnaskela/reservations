@@ -55,7 +55,7 @@ export class TimeSlotServiceBase {
     return this.prisma.timeSlot.delete(args);
   }
 
-  async findAvailabilities(
+  async findReservableSlots(
     parentId: string,
     args: Prisma.ReservableSlotFindManyArgs
   ): Promise<ReservableSlot[]> {
@@ -63,7 +63,7 @@ export class TimeSlotServiceBase {
       .findUnique({
         where: { id: parentId },
       })
-      .availabilities(args);
+      .reservableSlots(args);
   }
 
   async findTimeSlotNotifications(

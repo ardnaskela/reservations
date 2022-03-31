@@ -58,7 +58,7 @@ class TimeSlotCreateInput {
   @Field(() => ReservableSlotCreateNestedManyWithoutTimeSlotsInput, {
     nullable: true,
   })
-  availabilities?: ReservableSlotCreateNestedManyWithoutTimeSlotsInput;
+  reservableSlots?: ReservableSlotCreateNestedManyWithoutTimeSlotsInput;
 
   @ApiProperty({
     required: true,

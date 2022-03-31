@@ -24,7 +24,7 @@ export const ReservableSlotEdit = (props: EditProps): React.ReactElement => {
         <DateTimeInput label="DateTimeTo" source="dateTimeTo" />
         <BooleanInput label="isActive" source="isActive" />
         <ReferenceArrayInput
-          source="reservation"
+          source="reservations"
           reference="Reservation"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

@@ -1,6 +1,6 @@
 {
-  "short_name": "My app",
-  "name": "My app",
+  "short_name": "Reservations",
+  "name": "Reservations",
   "icons": [
     {
       "src": "favicon.ico",

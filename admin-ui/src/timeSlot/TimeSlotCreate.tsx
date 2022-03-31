@@ -37,7 +37,7 @@ export const TimeSlotCreate = (props: CreateProps): React.ReactElement => {
           source="maxSeatsAvailable"
         />
         <ReferenceArrayInput
-          source="reservableslot"
+          source="reservableSlots"
           reference="ReservableSlot"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
@@ -46,7 +46,7 @@ export const TimeSlotCreate = (props: CreateProps): React.ReactElement => {
         </ReferenceArrayInput>
         <TextInput label="timeFrom" source="timeFrom" />
         <ReferenceArrayInput
-          source="companysetnotification"
+          source="timeSlotNotifications"
           reference="CompanySetNotification"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

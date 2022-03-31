@@ -96,6 +96,7 @@ export class ReservationControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         reservableSlot: {
           select: {
@@ -146,6 +147,7 @@ export class ReservationControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         reservableSlot: {
           select: {
@@ -195,6 +197,7 @@ export class ReservationControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         reservableSlot: {
           select: {
@@ -277,6 +280,7 @@ export class ReservationControllerBase {
           },
 
           id: true,
+          isAccepted: true,
 
           reservableSlot: {
             select: {
@@ -327,6 +331,7 @@ export class ReservationControllerBase {
           },
 
           id: true,
+          isAccepted: true,
 
           reservableSlot: {
             select: {

@@ -49,6 +49,7 @@ export const ReservableSlotShow = (props: ShowProps): React.ReactElement => {
               <TextField source={CUSTOMER_TITLE_FIELD} />
             </ReferenceField>
             <TextField label="ID" source="id" />
+            <BooleanField label="isAccepted" source="isAccepted" />
             <ReferenceField
               label="ReservableSlot"
               source="reservableslot.id"

@@ -892,6 +892,7 @@ export class CustomerControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         reservableSlot: {
           select: {

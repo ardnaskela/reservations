@@ -15,6 +15,7 @@ import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqu
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { StringFilter } from "../../util/StringFilter";
+import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { ReservableSlotWhereUniqueInput } from "../../reservableSlot/base/ReservableSlotWhereUniqueInput";
 import { ReservationNotificationListRelationFilter } from "../../reservationNotification/base/ReservationNotificationListRelationFilter";
 @InputType()
@@ -41,6 +42,17 @@ class ReservationWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: BooleanNullableFilter,
+  })
+  @Type(() => BooleanNullableFilter)
+  @IsOptional()
+  @Field(() => BooleanNullableFilter, {
+    nullable: true,
+  })
+  isAccepted?: BooleanNullableFilter;
 
   @ApiProperty({
     required: false,

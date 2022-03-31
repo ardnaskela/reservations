@@ -7,7 +7,7 @@ export type TimeSlotUpdateInput = {
   company?: CompanyWhereUniqueInput;
   dayOfWeek?: DayOfWeekWhereUniqueInput | null;
   maxSeatsAvailable?: number;
-  availabilities?: ReservableSlotUpdateManyWithoutTimeSlotsInput;
+  reservableSlots?: ReservableSlotUpdateManyWithoutTimeSlotsInput;
   timeFrom?: string;
   timeSlotNotifications?: CompanySetNotificationUpdateManyWithoutTimeSlotsInput;
   timeTo?: string;

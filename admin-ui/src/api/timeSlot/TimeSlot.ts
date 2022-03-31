@@ -9,7 +9,7 @@ export type TimeSlot = {
   dayOfWeek?: DayOfWeek | null;
   id: string;
   maxSeatsAvailable: number;
-  availabilities?: Array<ReservableSlot>;
+  reservableSlots?: Array<ReservableSlot>;
   timeFrom: string;
   timeSlotNotifications?: Array<CompanySetNotification>;
   timeTo: string;

@@ -12,7 +12,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { ValidateNested, IsBoolean, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { ReservableSlotWhereUniqueInput } from "../../reservableSlot/base/ReservableSlotWhereUniqueInput";
 import { ReservationNotificationCreateNestedManyWithoutReservationsInput } from "./ReservationNotificationCreateNestedManyWithoutReservationsInput";
@@ -26,6 +26,17 @@ class ReservationCreateInput {
   @Type(() => CustomerWhereUniqueInput)
   @Field(() => CustomerWhereUniqueInput)
   customer!: CustomerWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isAccepted?: boolean | null;
 
   @ApiProperty({
     required: false,

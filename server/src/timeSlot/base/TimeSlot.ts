@@ -73,7 +73,7 @@ class TimeSlot {
   @ValidateNested()
   @Type(() => ReservableSlot)
   @IsOptional()
-  availabilities?: Array<ReservableSlot>;
+  reservableSlots?: Array<ReservableSlot>;
 
   @ApiProperty({
     required: true,
