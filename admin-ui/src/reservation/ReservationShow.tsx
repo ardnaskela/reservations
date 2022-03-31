@@ -7,6 +7,7 @@ import {
   DateField,
   ReferenceField,
   TextField,
+  BooleanField,
   ReferenceManyField,
   Datagrid,
 } from "react-admin";
@@ -29,6 +30,7 @@ export const ReservationShow = (props: ShowProps): React.ReactElement => {
           <TextField source={CUSTOMER_TITLE_FIELD} />
         </ReferenceField>
         <TextField label="ID" source="id" />
+        <BooleanField label="isAccepted" source="isAccepted" />
         <ReferenceField
           label="ReservableSlot"
           source="reservableslot.id"

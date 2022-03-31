@@ -6,6 +6,7 @@ export type Reservation = {
   createdAt: Date;
   customer?: Customer;
   id: string;
+  isAccepted: boolean | null;
   reservableSlot?: ReservableSlot | null;
   reservationNotifications?: Array<ReservationNotification>;
   updatedAt: Date;

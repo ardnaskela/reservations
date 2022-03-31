@@ -10,7 +10,7 @@ export type TimeSlotWhereInput = {
   dayOfWeek?: DayOfWeekWhereUniqueInput;
   id?: StringFilter;
   maxSeatsAvailable?: IntFilter;
-  availabilities?: ReservableSlotListRelationFilter;
+  reservableSlots?: ReservableSlotListRelationFilter;
   timeFrom?: StringFilter;
   timeSlotNotifications?: CompanySetNotificationListRelationFilter;
   timeTo?: StringFilter;

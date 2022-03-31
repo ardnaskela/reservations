@@ -64,7 +64,7 @@ class TimeSlotUpdateInput {
   @Field(() => ReservableSlotUpdateManyWithoutTimeSlotsInput, {
     nullable: true,
   })
-  availabilities?: ReservableSlotUpdateManyWithoutTimeSlotsInput;
+  reservableSlots?: ReservableSlotUpdateManyWithoutTimeSlotsInput;
 
   @ApiProperty({
     required: false,

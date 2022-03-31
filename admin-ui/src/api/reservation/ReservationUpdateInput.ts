@@ -4,6 +4,7 @@ import { ReservationNotificationUpdateManyWithoutReservationsInput } from "./Res
 
 export type ReservationUpdateInput = {
   customer?: CustomerWhereUniqueInput;
+  isAccepted?: boolean | null;
   reservableSlot?: ReservableSlotWhereUniqueInput | null;
   reservationNotifications?: ReservationNotificationUpdateManyWithoutReservationsInput;
 };

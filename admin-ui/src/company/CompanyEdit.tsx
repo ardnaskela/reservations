@@ -27,7 +27,7 @@ export const CompanyEdit = (props: EditProps): React.ReactElement => {
           <SelectInput optionText={AddressTitle} />
         </ReferenceInput>
         <ReferenceArrayInput
-          source="companysetnotification"
+          source="companySetNotifications"
           reference="CompanySetNotification"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
@@ -42,7 +42,7 @@ export const CompanyEdit = (props: EditProps): React.ReactElement => {
           <SelectInput optionText={CompanyTypeTitle} />
         </ReferenceInput>
         <ReferenceArrayInput
-          source="favoritecompany"
+          source="favoriteCompanies"
           reference="FavoriteCompany"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
@@ -50,7 +50,7 @@ export const CompanyEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={FavoriteCompanyTitle} />
         </ReferenceArrayInput>
         <ReferenceArrayInput
-          source="lastseencompany"
+          source="lastSeenCompanies"
           reference="LastSeenCompany"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
@@ -64,7 +64,7 @@ export const CompanyEdit = (props: EditProps): React.ReactElement => {
         </ReferenceInput>
         <TextInput label="phoneNumber" source="phoneNumber" />
         <ReferenceArrayInput
-          source="timeslot"
+          source="timeSlots"
           reference="TimeSlot"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

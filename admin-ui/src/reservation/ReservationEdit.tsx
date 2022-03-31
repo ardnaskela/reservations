@@ -6,6 +6,7 @@ import {
   EditProps,
   ReferenceInput,
   SelectInput,
+  BooleanInput,
   ReferenceArrayInput,
   SelectArrayInput,
 } from "react-admin";
@@ -25,6 +26,7 @@ export const ReservationEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectInput optionText={CustomerTitle} />
         </ReferenceInput>
+        <BooleanInput label="isAccepted" source="isAccepted" />
         <ReferenceInput
           source="reservableslot.id"
           reference="ReservableSlot"
@@ -33,7 +35,7 @@ export const ReservationEdit = (props: EditProps): React.ReactElement => {
           <SelectInput optionText={ReservableSlotTitle} />
         </ReferenceInput>
         <ReferenceArrayInput
-          source="reservationnotification"
+          source="reservationNotifications"
           reference="ReservationNotification"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

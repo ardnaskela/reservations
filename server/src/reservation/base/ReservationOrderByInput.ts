@@ -52,6 +52,15 @@ class ReservationOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  isAccepted?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   reservableSlotId?: SortOrder;
 
   @ApiProperty({

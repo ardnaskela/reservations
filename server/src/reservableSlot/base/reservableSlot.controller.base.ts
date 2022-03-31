@@ -356,6 +356,7 @@ export class ReservableSlotControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         reservableSlot: {
           select: {

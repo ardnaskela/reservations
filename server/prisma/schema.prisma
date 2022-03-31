@@ -81,7 +81,7 @@ model TimeSlot {
   dayOfWeekId           String?
   id                    String                   @id @default(cuid())
   maxSeatsAvailable     Int
-  availabilities        ReservableSlot[]
+  reservableSlots       ReservableSlot[]
   timeFrom              String
   timeSlotNotifications CompanySetNotification[]
   timeTo                String
@@ -122,6 +122,7 @@ model Reservation {
   customer                 Customer                  @relation(fields: [customerId], references: [id])
   customerId               String
   id                       String                    @id @default(cuid())
+  isAccepted               Boolean?
   reservableSlot           ReservableSlot?           @relation(fields: [reservableSlotId], references: [id])
   reservableSlotId         String?
   reservationNotifications ReservationNotification[]

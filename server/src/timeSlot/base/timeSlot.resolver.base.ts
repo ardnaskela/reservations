@@ -240,7 +240,7 @@ export class TimeSlotResolverBase {
     action: "read",
     possession: "any",
   })
-  async availabilities(
+  async reservableSlots(
     @graphql.Parent() parent: TimeSlot,
     @graphql.Args() args: ReservableSlotFindManyArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
@@ -251,7 +251,7 @@ export class TimeSlotResolverBase {
       possession: "any",
       resource: "ReservableSlot",
     });
-    const results = await this.service.findAvailabilities(parent.id, args);
+    const results = await this.service.findReservableSlots(parent.id, args);
 
     if (!results) {
       return [];

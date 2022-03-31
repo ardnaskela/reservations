@@ -77,7 +77,7 @@ class TimeSlotWhereInput {
   @Field(() => ReservableSlotListRelationFilter, {
     nullable: true,
   })
-  availabilities?: ReservableSlotListRelationFilter;
+  reservableSlots?: ReservableSlotListRelationFilter;
 
   @ApiProperty({
     required: false,

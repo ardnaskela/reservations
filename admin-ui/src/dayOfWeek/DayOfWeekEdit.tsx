@@ -18,7 +18,7 @@ export const DayOfWeekEdit = (props: EditProps): React.ReactElement => {
         <TextInput label="code" source="code" />
         <TextInput label="description" multiline source="description" />
         <ReferenceArrayInput
-          source="timeslot"
+          source="timeSlots"
           reference="TimeSlot"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

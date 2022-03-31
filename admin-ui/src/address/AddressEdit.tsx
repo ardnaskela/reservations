@@ -17,7 +17,7 @@ export const AddressEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="city" source="city" />
         <ReferenceArrayInput
-          source="company"
+          source="companies"
           reference="Company"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

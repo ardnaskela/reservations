@@ -365,14 +365,14 @@ export class TimeSlotControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Get("/:id/availabilities")
+  @common.Get("/:id/reservableSlots")
   @nestAccessControl.UseRoles({
     resource: "TimeSlot",
     action: "read",
     possession: "any",
   })
   @ApiNestedQuery(ReservableSlotFindManyArgs)
-  async findManyAvailabilities(
+  async findManyReservableSlots(
     @common.Req() request: Request,
     @common.Param() params: TimeSlotWhereUniqueInput,
     @nestAccessControl.UserRoles() userRoles: string[]
@@ -384,7 +384,7 @@ export class TimeSlotControllerBase {
       possession: "any",
       resource: "ReservableSlot",
     });
-    const results = await this.service.findAvailabilities(params.id, {
+    const results = await this.service.findReservableSlots(params.id, {
       ...query,
       select: {
         createdAt: true,
@@ -416,19 +416,19 @@ export class TimeSlotControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Post("/:id/availabilities")
+  @common.Post("/:id/reservableSlots")
   @nestAccessControl.UseRoles({
     resource: "TimeSlot",
     action: "update",
     possession: "any",
   })
-  async createAvailabilities(
+  async createReservableSlots(
     @common.Param() params: TimeSlotWhereUniqueInput,
     @common.Body() body: TimeSlotWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      availabilities: {
+      reservableSlots: {
         connect: body,
       },
     };
@@ -461,19 +461,19 @@ export class TimeSlotControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Patch("/:id/availabilities")
+  @common.Patch("/:id/reservableSlots")
   @nestAccessControl.UseRoles({
     resource: "TimeSlot",
     action: "update",
     possession: "any",
   })
-  async updateAvailabilities(
+  async updateReservableSlots(
     @common.Param() params: TimeSlotWhereUniqueInput,
     @common.Body() body: ReservableSlotWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      availabilities: {
+      reservableSlots: {
         set: body,
       },
     };
@@ -506,19 +506,19 @@ export class TimeSlotControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Delete("/:id/availabilities")
+  @common.Delete("/:id/reservableSlots")
   @nestAccessControl.UseRoles({
     resource: "TimeSlot",
     action: "update",
     possession: "any",
   })
-  async deleteAvailabilities(
+  async deleteReservableSlots(
     @common.Param() params: TimeSlotWhereUniqueInput,
     @common.Body() body: TimeSlotWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      availabilities: {
+      reservableSlots: {
         disconnect: body,
       },
     };
