@@ -43,7 +43,7 @@ class TimeSlotOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  dayOfWeekId?: SortOrder;
+  dayOfWeek?: SortOrder;
 
   @ApiProperty({
     required: false,

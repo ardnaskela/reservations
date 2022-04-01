@@ -82,12 +82,6 @@ export class TimeSlotControllerBase {
         company: {
           connect: data.company,
         },
-
-        dayOfWeek: data.dayOfWeek
-          ? {
-              connect: data.dayOfWeek,
-            }
-          : undefined,
       },
       select: {
         company: {
@@ -97,13 +91,7 @@ export class TimeSlotControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
@@ -149,13 +137,7 @@ export class TimeSlotControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
@@ -200,13 +182,7 @@ export class TimeSlotControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
@@ -269,12 +245,6 @@ export class TimeSlotControllerBase {
           company: {
             connect: data.company,
           },
-
-          dayOfWeek: data.dayOfWeek
-            ? {
-                connect: data.dayOfWeek,
-              }
-            : undefined,
         },
         select: {
           company: {
@@ -284,13 +254,7 @@ export class TimeSlotControllerBase {
           },
 
           createdAt: true,
-
-          dayOfWeek: {
-            select: {
-              id: true,
-            },
-          },
-
+          dayOfWeek: true,
           id: true,
           maxSeatsAvailable: true,
           timeFrom: true,
@@ -336,13 +300,7 @@ export class TimeSlotControllerBase {
           },
 
           createdAt: true,
-
-          dayOfWeek: {
-            select: {
-              id: true,
-            },
-          },
-
+          dayOfWeek: true,
           id: true,
           maxSeatsAvailable: true,
           timeFrom: true,

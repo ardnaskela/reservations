@@ -5,7 +5,6 @@ import { CompanyModule } from "./company/company.module";
 import { AddressModule } from "./address/address.module";
 import { CompanyTypeModule } from "./companyType/companyType.module";
 import { TimeSlotModule } from "./timeSlot/timeSlot.module";
-import { DayOfWeekModule } from "./dayOfWeek/dayOfWeek.module";
 import { FavoriteCompanyModule } from "./favoriteCompany/favoriteCompany.module";
 import { LastSeenCompanyModule } from "./lastSeenCompany/lastSeenCompany.module";
 import { ReservationModule } from "./reservation/reservation.module";
@@ -32,7 +31,6 @@ import { GraphQLModule } from "@nestjs/graphql";
     AddressModule,
     CompanyTypeModule,
     TimeSlotModule,
-    DayOfWeekModule,
     FavoriteCompanyModule,
     LastSeenCompanyModule,
     ReservationModule,

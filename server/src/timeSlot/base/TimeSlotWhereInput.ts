@@ -12,9 +12,9 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { ValidateNested, IsOptional, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
-import { DayOfWeekWhereUniqueInput } from "../../dayOfWeek/base/DayOfWeekWhereUniqueInput";
+import { EnumTimeSlotDayOfWeek } from "./EnumTimeSlotDayOfWeek";
 import { StringFilter } from "../../util/StringFilter";
 import { IntFilter } from "../../util/IntFilter";
 import { ReservableSlotListRelationFilter } from "../../reservableSlot/base/ReservableSlotListRelationFilter";
@@ -35,15 +35,14 @@ class TimeSlotWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => DayOfWeekWhereUniqueInput,
+    enum: EnumTimeSlotDayOfWeek,
   })
-  @ValidateNested()
-  @Type(() => DayOfWeekWhereUniqueInput)
+  @IsEnum(EnumTimeSlotDayOfWeek)
   @IsOptional()
-  @Field(() => DayOfWeekWhereUniqueInput, {
+  @Field(() => EnumTimeSlotDayOfWeek, {
     nullable: true,
   })
-  dayOfWeek?: DayOfWeekWhereUniqueInput;
+  dayOfWeek?: "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN";
 
   @ApiProperty({
     required: false,

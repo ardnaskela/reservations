@@ -77,8 +77,7 @@ model TimeSlot {
   company               Company                  @relation(fields: [companyId], references: [id])
   companyId             String
   createdAt             DateTime                 @default(now())
-  dayOfWeek             DayOfWeek?               @relation(fields: [dayOfWeekId], references: [id])
-  dayOfWeekId           String?
+  dayOfWeek             EnumTimeSlotDayOfWeek?
   id                    String                   @id @default(cuid())
   maxSeatsAvailable     Int
   reservableSlots       ReservableSlot[]
@@ -86,15 +85,6 @@ model TimeSlot {
   timeSlotNotifications CompanySetNotification[]
   timeTo                String
   updatedAt             DateTime                 @updatedAt
-}
-
-model DayOfWeek {
-  code        String     @unique
-  createdAt   DateTime   @default(now())
-  description String
-  id          String     @id @default(cuid())
-  timeSlots   TimeSlot[]
-  updatedAt   DateTime   @updatedAt
 }
 
 model FavoriteCompany {
@@ -171,4 +161,14 @@ model ReservationNotification {
   reservation    Reservation  @relation(fields: [reservationId], references: [id])
   reservationId  String
   updatedAt      DateTime     @updatedAt
+}
+
+enum EnumTimeSlotDayOfWeek {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
 }

@@ -1016,13 +1016,7 @@ export class CompanyControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
