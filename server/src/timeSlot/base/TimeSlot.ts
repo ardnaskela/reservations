@@ -15,12 +15,13 @@ import { Company } from "../../company/base/Company";
 import {
   ValidateNested,
   IsDate,
+  IsEnum,
   IsOptional,
   IsString,
   IsInt,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { DayOfWeek } from "../../dayOfWeek/base/DayOfWeek";
+import { EnumTimeSlotDayOfWeek } from "./EnumTimeSlotDayOfWeek";
 import { ReservableSlot } from "../../reservableSlot/base/ReservableSlot";
 import { CompanySetNotification } from "../../companySetNotification/base/CompanySetNotification";
 @ObjectType()
@@ -43,12 +44,14 @@ class TimeSlot {
 
   @ApiProperty({
     required: false,
-    type: () => DayOfWeek,
+    enum: EnumTimeSlotDayOfWeek,
   })
-  @ValidateNested()
-  @Type(() => DayOfWeek)
+  @IsEnum(EnumTimeSlotDayOfWeek)
   @IsOptional()
-  dayOfWeek?: DayOfWeek | null;
+  @Field(() => EnumTimeSlotDayOfWeek, {
+    nullable: true,
+  })
+  dayOfWeek?: "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN" | null;
 
   @ApiProperty({
     required: true,

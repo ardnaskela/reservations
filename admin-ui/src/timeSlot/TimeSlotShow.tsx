@@ -15,7 +15,6 @@ import {
 import { TIMESLOT_TITLE_FIELD } from "./TimeSlotTitle";
 import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { NOTIFICATION_TITLE_FIELD } from "../notification/NotificationTitle";
-import { DAYOFWEEK_TITLE_FIELD } from "../dayOfWeek/DayOfWeekTitle";
 
 export const TimeSlotShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -25,13 +24,7 @@ export const TimeSlotShow = (props: ShowProps): React.ReactElement => {
           <TextField source={COMPANY_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="createdAt" label="Created At" />
-        <ReferenceField
-          label="dayOfWeek"
-          source="dayofweek.id"
-          reference="DayOfWeek"
-        >
-          <TextField source={DAYOFWEEK_TITLE_FIELD} />
-        </ReferenceField>
+        <TextField label="dayOfWeek" source="dayOfWeek" />
         <TextField label="ID" source="id" />
         <TextField label="maxSeatsAvailable" source="maxSeatsAvailable" />
         <TextField label="timeFrom" source="timeFrom" />

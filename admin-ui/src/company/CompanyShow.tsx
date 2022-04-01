@@ -15,7 +15,6 @@ import { COMPANY_TITLE_FIELD } from "./CompanyTitle";
 import { NOTIFICATION_TITLE_FIELD } from "../notification/NotificationTitle";
 import { TIMESLOT_TITLE_FIELD } from "../timeSlot/TimeSlotTitle";
 import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
-import { DAYOFWEEK_TITLE_FIELD } from "../dayOfWeek/DayOfWeekTitle";
 import { ADDRESS_TITLE_FIELD } from "../address/AddressTitle";
 import { COMPANYTYPE_TITLE_FIELD } from "../companyType/CompanyTypeTitle";
 
@@ -139,13 +138,7 @@ export const CompanyShow = (props: ShowProps): React.ReactElement => {
               <TextField source={COMPANY_TITLE_FIELD} />
             </ReferenceField>
             <DateField source="createdAt" label="Created At" />
-            <ReferenceField
-              label="dayOfWeek"
-              source="dayofweek.id"
-              reference="DayOfWeek"
-            >
-              <TextField source={DAYOFWEEK_TITLE_FIELD} />
-            </ReferenceField>
+            <TextField label="dayOfWeek" source="dayOfWeek" />
             <TextField label="ID" source="id" />
             <TextField label="maxSeatsAvailable" source="maxSeatsAvailable" />
             <TextField label="timeFrom" source="timeFrom" />
