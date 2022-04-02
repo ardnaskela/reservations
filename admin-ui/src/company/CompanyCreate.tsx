@@ -17,6 +17,7 @@ import { CompanyTypeTitle } from "../companyType/CompanyTypeTitle";
 import { FavoriteCompanyTitle } from "../favoriteCompany/FavoriteCompanyTitle";
 import { LastSeenCompanyTitle } from "../lastSeenCompany/LastSeenCompanyTitle";
 import { CustomerTitle } from "../customer/CustomerTitle";
+import { ReservationTitle } from "../reservation/ReservationTitle";
 import { TimeSlotTitle } from "../timeSlot/TimeSlotTitle";
 
 export const CompanyCreate = (props: CreateProps): React.ReactElement => {
@@ -63,6 +64,14 @@ export const CompanyCreate = (props: CreateProps): React.ReactElement => {
           <SelectInput optionText={CustomerTitle} />
         </ReferenceInput>
         <TextInput label="phoneNumber" source="phoneNumber" />
+        <ReferenceArrayInput
+          source="reservations"
+          reference="Reservation"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ReservationTitle} />
+        </ReferenceArrayInput>
         <ReferenceArrayInput
           source="timeSlots"
           reference="TimeSlot"

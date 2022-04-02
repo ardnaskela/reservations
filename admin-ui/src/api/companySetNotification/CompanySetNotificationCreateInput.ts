@@ -1,9 +1,8 @@
 import { CompanyWhereUniqueInput } from "../company/CompanyWhereUniqueInput";
 import { NotificationWhereUniqueInput } from "../notification/NotificationWhereUniqueInput";
-import { TimeSlotWhereUniqueInput } from "../timeSlot/TimeSlotWhereUniqueInput";
 
 export type CompanySetNotificationCreateInput = {
   company: CompanyWhereUniqueInput;
+  customText?: string | null;
   notification: NotificationWhereUniqueInput;
-  timeSlot?: TimeSlotWhereUniqueInput | null;
 };

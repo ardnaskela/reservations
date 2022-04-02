@@ -15,7 +15,6 @@ import {
   CompanySetNotification,
   Company,
   Notification,
-  TimeSlot,
 } from "@prisma/client";
 
 export class CompanySetNotificationServiceBase {
@@ -67,13 +66,5 @@ export class CompanySetNotificationServiceBase {
         where: { id: parentId },
       })
       .notification();
-  }
-
-  async getTimeSlot(parentId: string): Promise<TimeSlot | null> {
-    return this.prisma.companySetNotification
-      .findUnique({
-        where: { id: parentId },
-      })
-      .timeSlot();
   }
 }

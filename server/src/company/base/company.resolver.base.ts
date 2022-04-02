@@ -31,6 +31,8 @@ import { FavoriteCompanyFindManyArgs } from "../../favoriteCompany/base/Favorite
 import { FavoriteCompany } from "../../favoriteCompany/base/FavoriteCompany";
 import { LastSeenCompanyFindManyArgs } from "../../lastSeenCompany/base/LastSeenCompanyFindManyArgs";
 import { LastSeenCompany } from "../../lastSeenCompany/base/LastSeenCompany";
+import { ReservationFindManyArgs } from "../../reservation/base/ReservationFindManyArgs";
+import { Reservation } from "../../reservation/base/Reservation";
 import { TimeSlotFindManyArgs } from "../../timeSlot/base/TimeSlotFindManyArgs";
 import { TimeSlot } from "../../timeSlot/base/TimeSlot";
 import { Address } from "../../address/base/Address";
@@ -320,6 +322,32 @@ export class CompanyResolverBase {
       resource: "LastSeenCompany",
     });
     const results = await this.service.findLastSeenCompanies(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => [Reservation])
+  @nestAccessControl.UseRoles({
+    resource: "Company",
+    action: "read",
+    possession: "any",
+  })
+  async reservations(
+    @graphql.Parent() parent: Company,
+    @graphql.Args() args: ReservationFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Reservation[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Reservation",
+    });
+    const results = await this.service.findReservations(parent.id, args);
 
     if (!results) {
       return [];

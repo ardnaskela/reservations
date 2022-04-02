@@ -347,6 +347,12 @@ export class ReservableSlotControllerBase {
     const results = await this.service.findReservations(params.id, {
       ...query,
       select: {
+        company: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
 
         customer: {

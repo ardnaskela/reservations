@@ -14,9 +14,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { NotificationWhereUniqueInput } from "../../notification/base/NotificationWhereUniqueInput";
-import { TimeSlotWhereUniqueInput } from "../../timeSlot/base/TimeSlotWhereUniqueInput";
 @InputType()
 class CompanySetNotificationWhereInput {
   @ApiProperty({
@@ -30,6 +30,17 @@ class CompanySetNotificationWhereInput {
     nullable: true,
   })
   company?: CompanyWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  customText?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -53,17 +64,5 @@ class CompanySetNotificationWhereInput {
     nullable: true,
   })
   notification?: NotificationWhereUniqueInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => TimeSlotWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => TimeSlotWhereUniqueInput)
-  @IsOptional()
-  @Field(() => TimeSlotWhereUniqueInput, {
-    nullable: true,
-  })
-  timeSlot?: TimeSlotWhereUniqueInput;
 }
 export { CompanySetNotificationWhereInput };

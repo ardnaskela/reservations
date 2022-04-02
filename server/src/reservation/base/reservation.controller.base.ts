@@ -76,6 +76,12 @@ export class ReservationControllerBase {
       data: {
         ...data,
 
+        company: data.company
+          ? {
+              connect: data.company,
+            }
+          : undefined,
+
         customer: {
           connect: data.customer,
         },
@@ -87,6 +93,12 @@ export class ReservationControllerBase {
           : undefined,
       },
       select: {
+        company: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
 
         customer: {
@@ -138,6 +150,12 @@ export class ReservationControllerBase {
     const results = await this.service.findMany({
       ...args,
       select: {
+        company: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
 
         customer: {
@@ -188,6 +206,12 @@ export class ReservationControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        company: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
 
         customer: {
@@ -260,6 +284,12 @@ export class ReservationControllerBase {
         data: {
           ...data,
 
+          company: data.company
+            ? {
+                connect: data.company,
+              }
+            : undefined,
+
           customer: {
             connect: data.customer,
           },
@@ -271,6 +301,12 @@ export class ReservationControllerBase {
             : undefined,
         },
         select: {
+          company: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
 
           customer: {
@@ -322,6 +358,12 @@ export class ReservationControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          company: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
 
           customer: {
@@ -383,6 +425,7 @@ export class ReservationControllerBase {
       ...query,
       select: {
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {

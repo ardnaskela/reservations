@@ -43,6 +43,15 @@ class CompanySetNotificationOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  customText?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   id?: SortOrder;
 
   @ApiProperty({
@@ -53,15 +62,6 @@ class CompanySetNotificationOrderByInput {
     nullable: true,
   })
   notificationId?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  timeSlotId?: SortOrder;
 
   @ApiProperty({
     required: false,
