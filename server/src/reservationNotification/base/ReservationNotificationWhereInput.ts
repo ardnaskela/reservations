@@ -11,13 +11,25 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
+import { StringFilter } from "../../util/StringFilter";
 import { NotificationWhereUniqueInput } from "../../notification/base/NotificationWhereUniqueInput";
 import { ReservationWhereUniqueInput } from "../../reservation/base/ReservationWhereUniqueInput";
 @InputType()
 class ReservationNotificationWhereInput {
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  customText?: StringNullableFilter;
+
   @ApiProperty({
     required: false,
     type: StringFilter,

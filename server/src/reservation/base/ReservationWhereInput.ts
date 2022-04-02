@@ -11,15 +11,28 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
+import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
+import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { ReservableSlotWhereUniqueInput } from "../../reservableSlot/base/ReservableSlotWhereUniqueInput";
 import { ReservationNotificationListRelationFilter } from "../../reservationNotification/base/ReservationNotificationListRelationFilter";
 @InputType()
 class ReservationWhereInput {
+  @ApiProperty({
+    required: false,
+    type: () => CompanyWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => CompanyWhereUniqueInput)
+  @IsOptional()
+  @Field(() => CompanyWhereUniqueInput, {
+    nullable: true,
+  })
+  company?: CompanyWhereUniqueInput;
+
   @ApiProperty({
     required: false,
     type: () => CustomerWhereUniqueInput,

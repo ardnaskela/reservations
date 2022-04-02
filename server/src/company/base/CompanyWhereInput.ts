@@ -21,6 +21,7 @@ import { StringFilter } from "../../util/StringFilter";
 import { LastSeenCompanyListRelationFilter } from "../../lastSeenCompany/base/LastSeenCompanyListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
+import { ReservationListRelationFilter } from "../../reservation/base/ReservationListRelationFilter";
 import { TimeSlotListRelationFilter } from "../../timeSlot/base/TimeSlotListRelationFilter";
 @InputType()
 class CompanyWhereInput {
@@ -139,6 +140,18 @@ class CompanyWhereInput {
     nullable: true,
   })
   phoneNumber?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ReservationListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => ReservationListRelationFilter)
+  @IsOptional()
+  @Field(() => ReservationListRelationFilter, {
+    nullable: true,
+  })
+  reservations?: ReservationListRelationFilter;
 
   @ApiProperty({
     required: false,

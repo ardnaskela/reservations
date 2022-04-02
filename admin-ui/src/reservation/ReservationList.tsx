@@ -4,13 +4,14 @@ import {
   List,
   Datagrid,
   ListProps,
-  DateField,
   ReferenceField,
   TextField,
+  DateField,
   BooleanField,
 } from "react-admin";
 
 import Pagination from "../Components/Pagination";
+import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
 import { RESERVABLESLOT_TITLE_FIELD } from "../reservableSlot/ReservableSlotTitle";
 
@@ -24,6 +25,9 @@ export const ReservationList = (props: ListProps): React.ReactElement => {
       pagination={<Pagination />}
     >
       <Datagrid rowClick="show">
+        <ReferenceField label="Company" source="company.id" reference="Company">
+          <TextField source={COMPANY_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="createdAt" label="Created At" />
         <ReferenceField
           label="Customer"

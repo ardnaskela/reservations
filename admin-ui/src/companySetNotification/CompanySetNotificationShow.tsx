@@ -9,7 +9,6 @@ import {
 } from "react-admin";
 import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { NOTIFICATION_TITLE_FIELD } from "../notification/NotificationTitle";
-import { TIMESLOT_TITLE_FIELD } from "../timeSlot/TimeSlotTitle";
 
 export const CompanySetNotificationShow = (
   props: ShowProps
@@ -21,6 +20,7 @@ export const CompanySetNotificationShow = (
           <TextField source={COMPANY_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="createdAt" label="Created At" />
+        <TextField label="customText" source="customText" />
         <TextField label="ID" source="id" />
         <ReferenceField
           label="Notification"
@@ -28,13 +28,6 @@ export const CompanySetNotificationShow = (
           reference="Notification"
         >
           <TextField source={NOTIFICATION_TITLE_FIELD} />
-        </ReferenceField>
-        <ReferenceField
-          label="TimeSlot"
-          source="timeslot.id"
-          reference="TimeSlot"
-        >
-          <TextField source={TIMESLOT_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
       </SimpleShowLayout>

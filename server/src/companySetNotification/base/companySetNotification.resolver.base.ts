@@ -27,7 +27,6 @@ import { CompanySetNotificationFindUniqueArgs } from "./CompanySetNotificationFi
 import { CompanySetNotification } from "./CompanySetNotification";
 import { Company } from "../../company/base/Company";
 import { Notification } from "../../notification/base/Notification";
-import { TimeSlot } from "../../timeSlot/base/TimeSlot";
 import { CompanySetNotificationService } from "../companySetNotification.service";
 
 @graphql.Resolver(() => CompanySetNotification)
@@ -144,12 +143,6 @@ export class CompanySetNotificationResolverBase {
         notification: {
           connect: args.data.notification,
         },
-
-        timeSlot: args.data.timeSlot
-          ? {
-              connect: args.data.timeSlot,
-            }
-          : undefined,
       },
     });
   }
@@ -199,12 +192,6 @@ export class CompanySetNotificationResolverBase {
           notification: {
             connect: args.data.notification,
           },
-
-          timeSlot: args.data.timeSlot
-            ? {
-                connect: args.data.timeSlot,
-              }
-            : undefined,
         },
       });
     } catch (error) {
@@ -280,30 +267,6 @@ export class CompanySetNotificationResolverBase {
       resource: "Notification",
     });
     const result = await this.service.getNotification(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return permission.filter(result);
-  }
-
-  @graphql.ResolveField(() => TimeSlot, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "CompanySetNotification",
-    action: "read",
-    possession: "any",
-  })
-  async timeSlot(
-    @graphql.Parent() parent: CompanySetNotification,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<TimeSlot | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "TimeSlot",
-    });
-    const result = await this.service.getTimeSlot(parent.id);
 
     if (!result) {
       return null;

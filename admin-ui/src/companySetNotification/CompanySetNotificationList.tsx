@@ -10,7 +10,6 @@ import {
 import Pagination from "../Components/Pagination";
 import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { NOTIFICATION_TITLE_FIELD } from "../notification/NotificationTitle";
-import { TIMESLOT_TITLE_FIELD } from "../timeSlot/TimeSlotTitle";
 
 export const CompanySetNotificationList = (
   props: ListProps
@@ -28,6 +27,7 @@ export const CompanySetNotificationList = (
           <TextField source={COMPANY_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="createdAt" label="Created At" />
+        <TextField label="customText" source="customText" />
         <TextField label="ID" source="id" />
         <ReferenceField
           label="Notification"
@@ -35,13 +35,6 @@ export const CompanySetNotificationList = (
           reference="Notification"
         >
           <TextField source={NOTIFICATION_TITLE_FIELD} />
-        </ReferenceField>
-        <ReferenceField
-          label="TimeSlot"
-          source="timeslot.id"
-          reference="TimeSlot"
-        >
-          <TextField source={TIMESLOT_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
       </Datagrid>

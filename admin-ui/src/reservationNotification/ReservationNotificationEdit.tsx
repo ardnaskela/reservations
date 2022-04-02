@@ -3,6 +3,7 @@ import {
   Edit,
   SimpleForm,
   EditProps,
+  TextInput,
   ReferenceInput,
   SelectInput,
 } from "react-admin";
@@ -15,6 +16,7 @@ export const ReservationNotificationEdit = (
   return (
     <Edit {...props}>
       <SimpleForm>
+        <TextInput label="customText" source="customText" />
         <ReferenceInput
           source="notification.id"
           reference="Notification"

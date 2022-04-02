@@ -298,15 +298,10 @@ export class NotificationControllerBase {
         },
 
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
-          select: {
-            id: true,
-          },
-        },
-
-        timeSlot: {
           select: {
             id: true,
           },
@@ -489,6 +484,7 @@ export class NotificationControllerBase {
       ...query,
       select: {
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {

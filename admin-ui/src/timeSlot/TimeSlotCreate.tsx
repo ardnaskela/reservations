@@ -13,9 +13,7 @@ import {
 } from "react-admin";
 
 import { CompanyTitle } from "../company/CompanyTitle";
-import { DayOfWeekTitle } from "../dayOfWeek/DayOfWeekTitle";
 import { ReservableSlotTitle } from "../reservableSlot/ReservableSlotTitle";
-import { CompanySetNotificationTitle } from "../companySetNotification/CompanySetNotificationTitle";
 
 export const TimeSlotCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -24,13 +22,22 @@ export const TimeSlotCreate = (props: CreateProps): React.ReactElement => {
         <ReferenceInput source="company.id" reference="Company" label="company">
           <SelectInput optionText={CompanyTitle} />
         </ReferenceInput>
-        <ReferenceInput
-          source="dayofweek.id"
-          reference="DayOfWeek"
+        <SelectInput
+          source="dayOfWeek"
           label="dayOfWeek"
-        >
-          <SelectInput optionText={DayOfWeekTitle} />
-        </ReferenceInput>
+          choices={[
+            { label: "Monday", value: "MON" },
+            { label: "Tuesday", value: "TUE" },
+            { label: "Wednesday", value: "WED" },
+            { label: "Thursday", value: "THU" },
+            { label: "Friday", value: "FRI" },
+            { label: "Saturday", value: "SAT" },
+            { label: "Sunday", value: "SUN" },
+          ]}
+          optionText="label"
+          allowEmpty
+          optionValue="value"
+        />
         <NumberInput
           step={1}
           label="maxSeatsAvailable"
@@ -45,14 +52,6 @@ export const TimeSlotCreate = (props: CreateProps): React.ReactElement => {
           <SelectArrayInput optionText={ReservableSlotTitle} />
         </ReferenceArrayInput>
         <TextInput label="timeFrom" source="timeFrom" />
-        <ReferenceArrayInput
-          source="timeSlotNotifications"
-          reference="CompanySetNotification"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={CompanySetNotificationTitle} />
-        </ReferenceArrayInput>
         <TextInput label="timeTo" source="timeTo" />
       </SimpleForm>
     </Create>

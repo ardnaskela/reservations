@@ -83,6 +83,7 @@ export class ReservationNotificationControllerBase {
       },
       select: {
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
@@ -135,6 +136,7 @@ export class ReservationNotificationControllerBase {
       ...args,
       select: {
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
@@ -183,6 +185,7 @@ export class ReservationNotificationControllerBase {
       where: params,
       select: {
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
@@ -262,6 +265,7 @@ export class ReservationNotificationControllerBase {
         },
         select: {
           createdAt: true,
+          customText: true,
           id: true,
 
           notification: {
@@ -311,6 +315,7 @@ export class ReservationNotificationControllerBase {
         where: params,
         select: {
           createdAt: true,
+          customText: true,
           id: true,
 
           notification: {

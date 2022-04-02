@@ -5,10 +5,10 @@ import {
   EditProps,
   ReferenceInput,
   SelectInput,
+  TextInput,
 } from "react-admin";
 import { CompanyTitle } from "../company/CompanyTitle";
 import { NotificationTitle } from "../notification/NotificationTitle";
-import { TimeSlotTitle } from "../timeSlot/TimeSlotTitle";
 
 export const CompanySetNotificationEdit = (
   props: EditProps
@@ -19,19 +19,13 @@ export const CompanySetNotificationEdit = (
         <ReferenceInput source="company.id" reference="Company" label="Company">
           <SelectInput optionText={CompanyTitle} />
         </ReferenceInput>
+        <TextInput label="customText" source="customText" />
         <ReferenceInput
           source="notification.id"
           reference="Notification"
           label="Notification"
         >
           <SelectInput optionText={NotificationTitle} />
-        </ReferenceInput>
-        <ReferenceInput
-          source="timeslot.id"
-          reference="TimeSlot"
-          label="TimeSlot"
-        >
-          <SelectInput optionText={TimeSlotTitle} />
         </ReferenceInput>
       </SimpleForm>
     </Edit>

@@ -12,11 +12,16 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
-import { ValidateNested, IsOptional, IsInt, IsString } from "class-validator";
+import {
+  ValidateNested,
+  IsEnum,
+  IsOptional,
+  IsInt,
+  IsString,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { DayOfWeekWhereUniqueInput } from "../../dayOfWeek/base/DayOfWeekWhereUniqueInput";
+import { EnumTimeSlotDayOfWeek } from "./EnumTimeSlotDayOfWeek";
 import { ReservableSlotCreateNestedManyWithoutTimeSlotsInput } from "./ReservableSlotCreateNestedManyWithoutTimeSlotsInput";
-import { CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput } from "./CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput";
 @InputType()
 class TimeSlotCreateInput {
   @ApiProperty({
@@ -30,23 +35,25 @@ class TimeSlotCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => DayOfWeekWhereUniqueInput,
+    enum: EnumTimeSlotDayOfWeek,
   })
-  @ValidateNested()
-  @Type(() => DayOfWeekWhereUniqueInput)
+  @IsEnum(EnumTimeSlotDayOfWeek)
   @IsOptional()
-  @Field(() => DayOfWeekWhereUniqueInput, {
+  @Field(() => EnumTimeSlotDayOfWeek, {
     nullable: true,
   })
-  dayOfWeek?: DayOfWeekWhereUniqueInput | null;
+  dayOfWeek?: "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN" | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: Number,
   })
   @IsInt()
-  @Field(() => Number)
-  maxSeatsAvailable!: number;
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  maxSeatsAvailable?: number | null;
 
   @ApiProperty({
     required: false,
@@ -67,18 +74,6 @@ class TimeSlotCreateInput {
   @IsString()
   @Field(() => String)
   timeFrom!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput,
-  })
-  @ValidateNested()
-  @Type(() => CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput)
-  @IsOptional()
-  @Field(() => CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput, {
-    nullable: true,
-  })
-  timeSlotNotifications?: CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput;
 
   @ApiProperty({
     required: true,

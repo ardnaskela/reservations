@@ -12,13 +12,12 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { ValidateNested, IsOptional, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
-import { DayOfWeekWhereUniqueInput } from "../../dayOfWeek/base/DayOfWeekWhereUniqueInput";
+import { EnumTimeSlotDayOfWeek } from "./EnumTimeSlotDayOfWeek";
 import { StringFilter } from "../../util/StringFilter";
-import { IntFilter } from "../../util/IntFilter";
+import { IntNullableFilter } from "../../util/IntNullableFilter";
 import { ReservableSlotListRelationFilter } from "../../reservableSlot/base/ReservableSlotListRelationFilter";
-import { CompanySetNotificationListRelationFilter } from "../../companySetNotification/base/CompanySetNotificationListRelationFilter";
 @InputType()
 class TimeSlotWhereInput {
   @ApiProperty({
@@ -35,15 +34,14 @@ class TimeSlotWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => DayOfWeekWhereUniqueInput,
+    enum: EnumTimeSlotDayOfWeek,
   })
-  @ValidateNested()
-  @Type(() => DayOfWeekWhereUniqueInput)
+  @IsEnum(EnumTimeSlotDayOfWeek)
   @IsOptional()
-  @Field(() => DayOfWeekWhereUniqueInput, {
+  @Field(() => EnumTimeSlotDayOfWeek, {
     nullable: true,
   })
-  dayOfWeek?: DayOfWeekWhereUniqueInput;
+  dayOfWeek?: "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN";
 
   @ApiProperty({
     required: false,
@@ -58,14 +56,14 @@ class TimeSlotWhereInput {
 
   @ApiProperty({
     required: false,
-    type: IntFilter,
+    type: IntNullableFilter,
   })
-  @Type(() => IntFilter)
+  @Type(() => IntNullableFilter)
   @IsOptional()
-  @Field(() => IntFilter, {
+  @Field(() => IntNullableFilter, {
     nullable: true,
   })
-  maxSeatsAvailable?: IntFilter;
+  maxSeatsAvailable?: IntNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -89,18 +87,6 @@ class TimeSlotWhereInput {
     nullable: true,
   })
   timeFrom?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => CompanySetNotificationListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => CompanySetNotificationListRelationFilter)
-  @IsOptional()
-  @Field(() => CompanySetNotificationListRelationFilter, {
-    nullable: true,
-  })
-  timeSlotNotifications?: CompanySetNotificationListRelationFilter;
 
   @ApiProperty({
     required: false,
