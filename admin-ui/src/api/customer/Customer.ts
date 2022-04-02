@@ -10,6 +10,7 @@ export type Customer = {
   firstName: string;
   handledCompanies?: Array<Company>;
   id: string;
+  isVerified: boolean | null;
   lastName: string;
   lastSeenCompanies?: Array<LastSeenCompany>;
   phoneNumber: string | null;
