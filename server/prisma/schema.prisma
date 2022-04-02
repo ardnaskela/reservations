@@ -25,6 +25,7 @@ model Customer {
   firstName         String
   handledCompanies  Company[]
   id                String            @id @default(cuid())
+  isVerified        Boolean?
   lastName          String
   lastSeenCompanies LastSeenCompany[]
   phoneNumber       String?

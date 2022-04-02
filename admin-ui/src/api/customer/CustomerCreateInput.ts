@@ -8,6 +8,7 @@ export type CustomerCreateInput = {
   favoriteCompanies?: FavoriteCompanyCreateNestedManyWithoutCustomersInput;
   firstName: string;
   handledCompanies?: CompanyCreateNestedManyWithoutCustomersInput;
+  isVerified?: boolean | null;
   lastName: string;
   lastSeenCompanies?: LastSeenCompanyCreateNestedManyWithoutCustomersInput;
   phoneNumber?: string | null;

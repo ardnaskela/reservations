@@ -11,7 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  ValidateNested,
+  IsBoolean,
+} from "class-validator";
 import { FavoriteCompanyUpdateManyWithoutCustomersInput } from "./FavoriteCompanyUpdateManyWithoutCustomersInput";
 import { Type } from "class-transformer";
 import { CompanyUpdateManyWithoutCustomersInput } from "./CompanyUpdateManyWithoutCustomersInput";
@@ -64,6 +69,17 @@ class CustomerUpdateInput {
     nullable: true,
   })
   handledCompanies?: CompanyUpdateManyWithoutCustomersInput;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isVerified?: boolean | null;
 
   @ApiProperty({
     required: false,
