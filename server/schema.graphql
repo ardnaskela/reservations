@@ -1,0 +1,1075 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Address {
+  city: String
+  companies(orderBy: [CompanyOrderByInput!], skip: Float, take: Float, where: CompanyWhereInput): [Company!]!
+  createdAt: DateTime!
+  id: String!
+  postalCode: String
+  province: String
+  street: String
+  streetNumber: String
+  updatedAt: DateTime!
+}
+
+input AddressCreateInput {
+  city: String
+  companies: CompanyCreateNestedManyWithoutAddressesInput
+  postalCode: String
+  province: String
+  street: String
+  streetNumber: String
+}
+
+input AddressOrderByInput {
+  city: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  postalCode: SortOrder
+  province: SortOrder
+  street: SortOrder
+  streetNumber: SortOrder
+  updatedAt: SortOrder
+}
+
+input AddressUpdateInput {
+  city: String
+  companies: CompanyUpdateManyWithoutAddressesInput
+  postalCode: String
+  province: String
+  street: String
+  streetNumber: String
+}
+
+input AddressWhereInput {
+  city: StringNullableFilter
+  companies: CompanyListRelationFilter
+  id: StringFilter
+  postalCode: StringNullableFilter
+  province: StringNullableFilter
+  street: StringNullableFilter
+  streetNumber: StringNullableFilter
+}
+
+input AddressWhereUniqueInput {
+  id: String!
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+type Company {
+  address: Address
+  companySetNotifications(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): [CompanySetNotification!]!
+  companyType: CompanyType
+  createdAt: DateTime!
+  favoriteCompanies(orderBy: [FavoriteCompanyOrderByInput!], skip: Float, take: Float, where: FavoriteCompanyWhereInput): [FavoriteCompany!]!
+  id: String!
+  lastSeenCompanies(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): [LastSeenCompany!]!
+  logo: String
+  name: String!
+  owner: Customer
+  phoneNumber: String!
+  timeSlots(orderBy: [TimeSlotOrderByInput!], skip: Float, take: Float, where: TimeSlotWhereInput): [TimeSlot!]!
+  updatedAt: DateTime!
+  vatCode: String!
+}
+
+input CompanyCreateInput {
+  address: AddressWhereUniqueInput!
+  companySetNotifications: CompanySetNotificationCreateNestedManyWithoutCompaniesInput
+  companyType: CompanyTypeWhereUniqueInput
+  favoriteCompanies: FavoriteCompanyCreateNestedManyWithoutCompaniesInput
+  lastSeenCompanies: LastSeenCompanyCreateNestedManyWithoutCompaniesInput
+  logo: String
+  name: String!
+  owner: CustomerWhereUniqueInput!
+  phoneNumber: String!
+  timeSlots: TimeSlotCreateNestedManyWithoutCompaniesInput
+  vatCode: String!
+}
+
+input CompanyCreateNestedManyWithoutAddressesInput {
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyCreateNestedManyWithoutCompanyTypesInput {
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyCreateNestedManyWithoutCustomersInput {
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyListRelationFilter {
+  every: CompanyWhereInput
+  none: CompanyWhereInput
+  some: CompanyWhereInput
+}
+
+input CompanyOrderByInput {
+  addressId: SortOrder
+  companyTypeId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  logo: SortOrder
+  name: SortOrder
+  ownerId: SortOrder
+  phoneNumber: SortOrder
+  updatedAt: SortOrder
+  vatCode: SortOrder
+}
+
+type CompanySetNotification {
+  company: Company
+  createdAt: DateTime!
+  id: String!
+  notification: Notification
+  timeSlot: TimeSlot
+  updatedAt: DateTime!
+}
+
+input CompanySetNotificationCreateInput {
+  company: CompanyWhereUniqueInput!
+  notification: NotificationWhereUniqueInput!
+  timeSlot: TimeSlotWhereUniqueInput
+}
+
+input CompanySetNotificationCreateNestedManyWithoutCompaniesInput {
+  connect: [CompanySetNotificationWhereUniqueInput!]
+}
+
+input CompanySetNotificationCreateNestedManyWithoutNotificationsInput {
+  connect: [CompanySetNotificationWhereUniqueInput!]
+}
+
+input CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput {
+  connect: [CompanySetNotificationWhereUniqueInput!]
+}
+
+input CompanySetNotificationListRelationFilter {
+  every: CompanySetNotificationWhereInput
+  none: CompanySetNotificationWhereInput
+  some: CompanySetNotificationWhereInput
+}
+
+input CompanySetNotificationOrderByInput {
+  companyId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  notificationId: SortOrder
+  timeSlotId: SortOrder
+  updatedAt: SortOrder
+}
+
+input CompanySetNotificationUpdateInput {
+  company: CompanyWhereUniqueInput
+  notification: NotificationWhereUniqueInput
+  timeSlot: TimeSlotWhereUniqueInput
+}
+
+input CompanySetNotificationUpdateManyWithoutCompaniesInput {
+  connect: [CompanySetNotificationWhereUniqueInput!]
+  disconnect: [CompanySetNotificationWhereUniqueInput!]
+  set: [CompanySetNotificationWhereUniqueInput!]
+}
+
+input CompanySetNotificationUpdateManyWithoutNotificationsInput {
+  connect: [CompanySetNotificationWhereUniqueInput!]
+  disconnect: [CompanySetNotificationWhereUniqueInput!]
+  set: [CompanySetNotificationWhereUniqueInput!]
+}
+
+input CompanySetNotificationUpdateManyWithoutTimeSlotsInput {
+  connect: [CompanySetNotificationWhereUniqueInput!]
+  disconnect: [CompanySetNotificationWhereUniqueInput!]
+  set: [CompanySetNotificationWhereUniqueInput!]
+}
+
+input CompanySetNotificationWhereInput {
+  company: CompanyWhereUniqueInput
+  id: StringFilter
+  notification: NotificationWhereUniqueInput
+  timeSlot: TimeSlotWhereUniqueInput
+}
+
+input CompanySetNotificationWhereUniqueInput {
+  id: String!
+}
+
+type CompanyType {
+  code: String!
+  companies(orderBy: [CompanyOrderByInput!], skip: Float, take: Float, where: CompanyWhereInput): [Company!]!
+  createdAt: DateTime!
+  description: String!
+  id: String!
+  updatedAt: DateTime!
+}
+
+input CompanyTypeCreateInput {
+  code: String!
+  companies: CompanyCreateNestedManyWithoutCompanyTypesInput
+  description: String!
+}
+
+input CompanyTypeOrderByInput {
+  code: SortOrder
+  createdAt: SortOrder
+  description: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+}
+
+input CompanyTypeUpdateInput {
+  code: String
+  companies: CompanyUpdateManyWithoutCompanyTypesInput
+  description: String
+}
+
+input CompanyTypeWhereInput {
+  code: StringFilter
+  companies: CompanyListRelationFilter
+  description: StringFilter
+  id: StringFilter
+}
+
+input CompanyTypeWhereUniqueInput {
+  id: String!
+}
+
+input CompanyUpdateInput {
+  address: AddressWhereUniqueInput
+  companySetNotifications: CompanySetNotificationUpdateManyWithoutCompaniesInput
+  companyType: CompanyTypeWhereUniqueInput
+  favoriteCompanies: FavoriteCompanyUpdateManyWithoutCompaniesInput
+  lastSeenCompanies: LastSeenCompanyUpdateManyWithoutCompaniesInput
+  logo: String
+  name: String
+  owner: CustomerWhereUniqueInput
+  phoneNumber: String
+  timeSlots: TimeSlotUpdateManyWithoutCompaniesInput
+  vatCode: String
+}
+
+input CompanyUpdateManyWithoutAddressesInput {
+  connect: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+}
+
+input CompanyUpdateManyWithoutCompanyTypesInput {
+  connect: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+}
+
+input CompanyUpdateManyWithoutCustomersInput {
+  connect: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
+}
+
+input CompanyWhereInput {
+  address: AddressWhereUniqueInput
+  companySetNotifications: CompanySetNotificationListRelationFilter
+  companyType: CompanyTypeWhereUniqueInput
+  favoriteCompanies: FavoriteCompanyListRelationFilter
+  id: StringFilter
+  lastSeenCompanies: LastSeenCompanyListRelationFilter
+  logo: StringNullableFilter
+  name: StringFilter
+  owner: CustomerWhereUniqueInput
+  phoneNumber: StringFilter
+  timeSlots: TimeSlotListRelationFilter
+  vatCode: StringFilter
+}
+
+input CompanyWhereUniqueInput {
+  id: String!
+}
+
+input Credentials {
+  password: String!
+  username: String!
+}
+
+type Customer {
+  createdAt: DateTime!
+  email: String!
+  favoriteCompanies(orderBy: [FavoriteCompanyOrderByInput!], skip: Float, take: Float, where: FavoriteCompanyWhereInput): [FavoriteCompany!]!
+  firstName: String!
+  handledCompanies(orderBy: [CompanyOrderByInput!], skip: Float, take: Float, where: CompanyWhereInput): [Company!]!
+  id: String!
+  lastName: String!
+  lastSeenCompanies(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): [LastSeenCompany!]!
+  phoneNumber: String
+  reservations(orderBy: [ReservationOrderByInput!], skip: Float, take: Float, where: ReservationWhereInput): [Reservation!]!
+  updatedAt: DateTime!
+}
+
+input CustomerCreateInput {
+  email: String!
+  favoriteCompanies: FavoriteCompanyCreateNestedManyWithoutCustomersInput
+  firstName: String!
+  handledCompanies: CompanyCreateNestedManyWithoutCustomersInput
+  lastName: String!
+  lastSeenCompanies: LastSeenCompanyCreateNestedManyWithoutCustomersInput
+  phoneNumber: String
+  reservations: ReservationCreateNestedManyWithoutCustomersInput
+}
+
+input CustomerOrderByInput {
+  createdAt: SortOrder
+  email: SortOrder
+  firstName: SortOrder
+  id: SortOrder
+  lastName: SortOrder
+  phoneNumber: SortOrder
+  updatedAt: SortOrder
+}
+
+input CustomerUpdateInput {
+  email: String
+  favoriteCompanies: FavoriteCompanyUpdateManyWithoutCustomersInput
+  firstName: String
+  handledCompanies: CompanyUpdateManyWithoutCustomersInput
+  lastName: String
+  lastSeenCompanies: LastSeenCompanyUpdateManyWithoutCustomersInput
+  phoneNumber: String
+  reservations: ReservationUpdateManyWithoutCustomersInput
+}
+
+input CustomerWhereInput {
+  email: StringFilter
+  favoriteCompanies: FavoriteCompanyListRelationFilter
+  firstName: StringFilter
+  handledCompanies: CompanyListRelationFilter
+  id: StringFilter
+  lastName: StringFilter
+  lastSeenCompanies: LastSeenCompanyListRelationFilter
+  phoneNumber: StringNullableFilter
+  reservations: ReservationListRelationFilter
+}
+
+input CustomerWhereUniqueInput {
+  id: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+type DayOfWeek {
+  code: String!
+  createdAt: DateTime!
+  description: String!
+  id: String!
+  timeSlots(orderBy: [TimeSlotOrderByInput!], skip: Float, take: Float, where: TimeSlotWhereInput): [TimeSlot!]!
+  updatedAt: DateTime!
+}
+
+input DayOfWeekCreateInput {
+  code: String!
+  description: String!
+  timeSlots: TimeSlotCreateNestedManyWithoutDayOfWeeksInput
+}
+
+input DayOfWeekOrderByInput {
+  code: SortOrder
+  createdAt: SortOrder
+  description: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+}
+
+input DayOfWeekUpdateInput {
+  code: String
+  description: String
+  timeSlots: TimeSlotUpdateManyWithoutDayOfWeeksInput
+}
+
+input DayOfWeekWhereInput {
+  code: StringFilter
+  description: StringFilter
+  id: StringFilter
+  timeSlots: TimeSlotListRelationFilter
+}
+
+input DayOfWeekWhereUniqueInput {
+  id: String!
+}
+
+type FavoriteCompany {
+  company: Company
+  createdAt: DateTime!
+  customer: Customer
+  id: String!
+  updatedAt: DateTime!
+}
+
+input FavoriteCompanyCreateInput {
+  company: CompanyWhereUniqueInput
+  customer: CustomerWhereUniqueInput!
+}
+
+input FavoriteCompanyCreateNestedManyWithoutCompaniesInput {
+  connect: [FavoriteCompanyWhereUniqueInput!]
+}
+
+input FavoriteCompanyCreateNestedManyWithoutCustomersInput {
+  connect: [FavoriteCompanyWhereUniqueInput!]
+}
+
+input FavoriteCompanyListRelationFilter {
+  every: FavoriteCompanyWhereInput
+  none: FavoriteCompanyWhereInput
+  some: FavoriteCompanyWhereInput
+}
+
+input FavoriteCompanyOrderByInput {
+  companyId: SortOrder
+  createdAt: SortOrder
+  customerId: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+}
+
+input FavoriteCompanyUpdateInput {
+  company: CompanyWhereUniqueInput
+  customer: CustomerWhereUniqueInput
+}
+
+input FavoriteCompanyUpdateManyWithoutCompaniesInput {
+  connect: [FavoriteCompanyWhereUniqueInput!]
+  disconnect: [FavoriteCompanyWhereUniqueInput!]
+  set: [FavoriteCompanyWhereUniqueInput!]
+}
+
+input FavoriteCompanyUpdateManyWithoutCustomersInput {
+  connect: [FavoriteCompanyWhereUniqueInput!]
+  disconnect: [FavoriteCompanyWhereUniqueInput!]
+  set: [FavoriteCompanyWhereUniqueInput!]
+}
+
+input FavoriteCompanyWhereInput {
+  company: CompanyWhereUniqueInput
+  customer: CustomerWhereUniqueInput
+  id: StringFilter
+}
+
+input FavoriteCompanyWhereUniqueInput {
+  id: String!
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
+}
+
+type LastSeenCompany {
+  company: Company
+  createdAt: DateTime!
+  customer: Customer
+  id: String!
+  updatedAt: DateTime!
+}
+
+input LastSeenCompanyCreateInput {
+  company: CompanyWhereUniqueInput
+  customer: CustomerWhereUniqueInput
+}
+
+input LastSeenCompanyCreateNestedManyWithoutCompaniesInput {
+  connect: [LastSeenCompanyWhereUniqueInput!]
+}
+
+input LastSeenCompanyCreateNestedManyWithoutCustomersInput {
+  connect: [LastSeenCompanyWhereUniqueInput!]
+}
+
+input LastSeenCompanyListRelationFilter {
+  every: LastSeenCompanyWhereInput
+  none: LastSeenCompanyWhereInput
+  some: LastSeenCompanyWhereInput
+}
+
+input LastSeenCompanyOrderByInput {
+  companyId: SortOrder
+  createdAt: SortOrder
+  customerId: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+}
+
+input LastSeenCompanyUpdateInput {
+  company: CompanyWhereUniqueInput
+  customer: CustomerWhereUniqueInput
+}
+
+input LastSeenCompanyUpdateManyWithoutCompaniesInput {
+  connect: [LastSeenCompanyWhereUniqueInput!]
+  disconnect: [LastSeenCompanyWhereUniqueInput!]
+  set: [LastSeenCompanyWhereUniqueInput!]
+}
+
+input LastSeenCompanyUpdateManyWithoutCustomersInput {
+  connect: [LastSeenCompanyWhereUniqueInput!]
+  disconnect: [LastSeenCompanyWhereUniqueInput!]
+  set: [LastSeenCompanyWhereUniqueInput!]
+}
+
+input LastSeenCompanyWhereInput {
+  company: CompanyWhereUniqueInput
+  customer: CustomerWhereUniqueInput
+  id: StringFilter
+}
+
+input LastSeenCompanyWhereUniqueInput {
+  id: String!
+}
+
+type MetaQueryPayload {
+  count: String!
+}
+
+type Mutation {
+  createAddress(data: AddressCreateInput!): Address!
+  createCompany(data: CompanyCreateInput!): Company!
+  createCompanySetNotification(data: CompanySetNotificationCreateInput!): CompanySetNotification!
+  createCompanyType(data: CompanyTypeCreateInput!): CompanyType!
+  createCustomer(data: CustomerCreateInput!): Customer!
+  createDayOfWeek(data: DayOfWeekCreateInput!): DayOfWeek!
+  createFavoriteCompany(data: FavoriteCompanyCreateInput!): FavoriteCompany!
+  createLastSeenCompany(data: LastSeenCompanyCreateInput!): LastSeenCompany!
+  createNotification(data: NotificationCreateInput!): Notification!
+  createReservableSlot(data: ReservableSlotCreateInput!): ReservableSlot!
+  createReservation(data: ReservationCreateInput!): Reservation!
+  createReservationNotification(data: ReservationNotificationCreateInput!): ReservationNotification!
+  createTimeSlot(data: TimeSlotCreateInput!): TimeSlot!
+  createUser(data: UserCreateInput!): User!
+  deleteAddress(where: AddressWhereUniqueInput!): Address!
+  deleteCompany(where: CompanyWhereUniqueInput!): Company!
+  deleteCompanySetNotification(where: CompanySetNotificationWhereUniqueInput!): CompanySetNotification!
+  deleteCompanyType(where: CompanyTypeWhereUniqueInput!): CompanyType!
+  deleteCustomer(where: CustomerWhereUniqueInput!): Customer!
+  deleteDayOfWeek(where: DayOfWeekWhereUniqueInput!): DayOfWeek!
+  deleteFavoriteCompany(where: FavoriteCompanyWhereUniqueInput!): FavoriteCompany!
+  deleteLastSeenCompany(where: LastSeenCompanyWhereUniqueInput!): LastSeenCompany!
+  deleteNotification(where: NotificationWhereUniqueInput!): Notification!
+  deleteReservableSlot(where: ReservableSlotWhereUniqueInput!): ReservableSlot!
+  deleteReservation(where: ReservationWhereUniqueInput!): Reservation!
+  deleteReservationNotification(where: ReservationNotificationWhereUniqueInput!): ReservationNotification!
+  deleteTimeSlot(where: TimeSlotWhereUniqueInput!): TimeSlot!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  login(credentials: Credentials!): UserInfo!
+  updateAddress(data: AddressUpdateInput!, where: AddressWhereUniqueInput!): Address!
+  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company!
+  updateCompanySetNotification(data: CompanySetNotificationUpdateInput!, where: CompanySetNotificationWhereUniqueInput!): CompanySetNotification!
+  updateCompanyType(data: CompanyTypeUpdateInput!, where: CompanyTypeWhereUniqueInput!): CompanyType!
+  updateCustomer(data: CustomerUpdateInput!, where: CustomerWhereUniqueInput!): Customer!
+  updateDayOfWeek(data: DayOfWeekUpdateInput!, where: DayOfWeekWhereUniqueInput!): DayOfWeek!
+  updateFavoriteCompany(data: FavoriteCompanyUpdateInput!, where: FavoriteCompanyWhereUniqueInput!): FavoriteCompany!
+  updateLastSeenCompany(data: LastSeenCompanyUpdateInput!, where: LastSeenCompanyWhereUniqueInput!): LastSeenCompany!
+  updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification!
+  updateReservableSlot(data: ReservableSlotUpdateInput!, where: ReservableSlotWhereUniqueInput!): ReservableSlot!
+  updateReservation(data: ReservationUpdateInput!, where: ReservationWhereUniqueInput!): Reservation!
+  updateReservationNotification(data: ReservationNotificationUpdateInput!, where: ReservationNotificationWhereUniqueInput!): ReservationNotification!
+  updateTimeSlot(data: TimeSlotUpdateInput!, where: TimeSlotWhereUniqueInput!): TimeSlot!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type Notification {
+  companySetNotifications(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): [CompanySetNotification!]!
+  createdAt: DateTime!
+  id: String!
+  minutesBefore: Float!
+  reservationNotifications(orderBy: [ReservationNotificationOrderByInput!], skip: Float, take: Float, where: ReservationNotificationWhereInput): [ReservationNotification!]!
+  updatedAt: DateTime!
+}
+
+input NotificationCreateInput {
+  companySetNotifications: CompanySetNotificationCreateNestedManyWithoutNotificationsInput
+  minutesBefore: Float!
+  reservationNotifications: ReservationNotificationCreateNestedManyWithoutNotificationsInput
+}
+
+input NotificationOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  minutesBefore: SortOrder
+  updatedAt: SortOrder
+}
+
+input NotificationUpdateInput {
+  companySetNotifications: CompanySetNotificationUpdateManyWithoutNotificationsInput
+  minutesBefore: Float
+  reservationNotifications: ReservationNotificationUpdateManyWithoutNotificationsInput
+}
+
+input NotificationWhereInput {
+  companySetNotifications: CompanySetNotificationListRelationFilter
+  id: StringFilter
+  minutesBefore: IntFilter
+  reservationNotifications: ReservationNotificationListRelationFilter
+}
+
+input NotificationWhereUniqueInput {
+  id: String!
+}
+
+type Query {
+  _addressesMeta(orderBy: [AddressOrderByInput!], skip: Float, take: Float, where: AddressWhereInput): MetaQueryPayload!
+  _companiesMeta(orderBy: [CompanyOrderByInput!], skip: Float, take: Float, where: CompanyWhereInput): MetaQueryPayload!
+  _companySetNotificationsMeta(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): MetaQueryPayload!
+  _companyTypesMeta(orderBy: [CompanyTypeOrderByInput!], skip: Float, take: Float, where: CompanyTypeWhereInput): MetaQueryPayload!
+  _customersMeta(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): MetaQueryPayload!
+  _dayOfWeeksMeta(orderBy: [DayOfWeekOrderByInput!], skip: Float, take: Float, where: DayOfWeekWhereInput): MetaQueryPayload!
+  _favoriteCompaniesMeta(orderBy: [FavoriteCompanyOrderByInput!], skip: Float, take: Float, where: FavoriteCompanyWhereInput): MetaQueryPayload!
+  _lastSeenCompaniesMeta(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): MetaQueryPayload!
+  _notificationsMeta(orderBy: [NotificationOrderByInput!], skip: Float, take: Float, where: NotificationWhereInput): MetaQueryPayload!
+  _reservableSlotsMeta(orderBy: [ReservableSlotOrderByInput!], skip: Float, take: Float, where: ReservableSlotWhereInput): MetaQueryPayload!
+  _reservationNotificationsMeta(orderBy: [ReservationNotificationOrderByInput!], skip: Float, take: Float, where: ReservationNotificationWhereInput): MetaQueryPayload!
+  _reservationsMeta(orderBy: [ReservationOrderByInput!], skip: Float, take: Float, where: ReservationWhereInput): MetaQueryPayload!
+  _timeSlotsMeta(orderBy: [TimeSlotOrderByInput!], skip: Float, take: Float, where: TimeSlotWhereInput): MetaQueryPayload!
+  _usersMeta(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): MetaQueryPayload!
+  address(where: AddressWhereUniqueInput!): Address
+  addresses(orderBy: [AddressOrderByInput!], skip: Float, take: Float, where: AddressWhereInput): [Address!]!
+  companies(orderBy: [CompanyOrderByInput!], skip: Float, take: Float, where: CompanyWhereInput): [Company!]!
+  company(where: CompanyWhereUniqueInput!): Company
+  companySetNotification(where: CompanySetNotificationWhereUniqueInput!): CompanySetNotification
+  companySetNotifications(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): [CompanySetNotification!]!
+  companyType(where: CompanyTypeWhereUniqueInput!): CompanyType
+  companyTypes(orderBy: [CompanyTypeOrderByInput!], skip: Float, take: Float, where: CompanyTypeWhereInput): [CompanyType!]!
+  customer(where: CustomerWhereUniqueInput!): Customer
+  customers(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): [Customer!]!
+  dayOfWeek(where: DayOfWeekWhereUniqueInput!): DayOfWeek
+  dayOfWeeks(orderBy: [DayOfWeekOrderByInput!], skip: Float, take: Float, where: DayOfWeekWhereInput): [DayOfWeek!]!
+  favoriteCompanies(orderBy: [FavoriteCompanyOrderByInput!], skip: Float, take: Float, where: FavoriteCompanyWhereInput): [FavoriteCompany!]!
+  favoriteCompany(where: FavoriteCompanyWhereUniqueInput!): FavoriteCompany
+  lastSeenCompanies(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): [LastSeenCompany!]!
+  lastSeenCompany(where: LastSeenCompanyWhereUniqueInput!): LastSeenCompany
+  notification(where: NotificationWhereUniqueInput!): Notification
+  notifications(orderBy: [NotificationOrderByInput!], skip: Float, take: Float, where: NotificationWhereInput): [Notification!]!
+  reservableSlot(where: ReservableSlotWhereUniqueInput!): ReservableSlot
+  reservableSlots(orderBy: [ReservableSlotOrderByInput!], skip: Float, take: Float, where: ReservableSlotWhereInput): [ReservableSlot!]!
+  reservation(where: ReservationWhereUniqueInput!): Reservation
+  reservationNotification(where: ReservationNotificationWhereUniqueInput!): ReservationNotification
+  reservationNotifications(orderBy: [ReservationNotificationOrderByInput!], skip: Float, take: Float, where: ReservationNotificationWhereInput): [ReservationNotification!]!
+  reservations(orderBy: [ReservationOrderByInput!], skip: Float, take: Float, where: ReservationWhereInput): [Reservation!]!
+  timeSlot(where: TimeSlotWhereUniqueInput!): TimeSlot
+  timeSlots(orderBy: [TimeSlotOrderByInput!], skip: Float, take: Float, where: TimeSlotWhereInput): [TimeSlot!]!
+  user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  Default
+  Insensitive
+}
+
+type ReservableSlot {
+  createdAt: DateTime!
+  dateTimeFrom: DateTime!
+  dateTimeTo: DateTime!
+  id: String!
+  isActive: Boolean!
+  reservations(orderBy: [ReservationOrderByInput!], skip: Float, take: Float, where: ReservationWhereInput): [Reservation!]!
+  seatsLeft: Float
+  timeSlot: TimeSlot
+  updatedAt: DateTime!
+}
+
+input ReservableSlotCreateInput {
+  dateTimeFrom: DateTime!
+  dateTimeTo: DateTime!
+  isActive: Boolean!
+  reservations: ReservationCreateNestedManyWithoutReservableSlotsInput
+  seatsLeft: Float
+  timeSlot: TimeSlotWhereUniqueInput!
+}
+
+input ReservableSlotCreateNestedManyWithoutTimeSlotsInput {
+  connect: [ReservableSlotWhereUniqueInput!]
+}
+
+input ReservableSlotListRelationFilter {
+  every: ReservableSlotWhereInput
+  none: ReservableSlotWhereInput
+  some: ReservableSlotWhereInput
+}
+
+input ReservableSlotOrderByInput {
+  createdAt: SortOrder
+  dateTimeFrom: SortOrder
+  dateTimeTo: SortOrder
+  id: SortOrder
+  isActive: SortOrder
+  seatsLeft: SortOrder
+  timeSlotId: SortOrder
+  updatedAt: SortOrder
+}
+
+input ReservableSlotUpdateInput {
+  dateTimeFrom: DateTime
+  dateTimeTo: DateTime
+  isActive: Boolean
+  reservations: ReservationUpdateManyWithoutReservableSlotsInput
+  seatsLeft: Float
+  timeSlot: TimeSlotWhereUniqueInput
+}
+
+input ReservableSlotUpdateManyWithoutTimeSlotsInput {
+  connect: [ReservableSlotWhereUniqueInput!]
+  disconnect: [ReservableSlotWhereUniqueInput!]
+  set: [ReservableSlotWhereUniqueInput!]
+}
+
+input ReservableSlotWhereInput {
+  dateTimeFrom: DateTimeFilter
+  dateTimeTo: DateTimeFilter
+  id: StringFilter
+  isActive: BooleanFilter
+  reservations: ReservationListRelationFilter
+  seatsLeft: IntNullableFilter
+  timeSlot: TimeSlotWhereUniqueInput
+}
+
+input ReservableSlotWhereUniqueInput {
+  id: String!
+}
+
+type Reservation {
+  createdAt: DateTime!
+  customer: Customer
+  id: String!
+  reservableSlot: ReservableSlot
+  reservationNotifications(orderBy: [ReservationNotificationOrderByInput!], skip: Float, take: Float, where: ReservationNotificationWhereInput): [ReservationNotification!]!
+  updatedAt: DateTime!
+}
+
+input ReservationCreateInput {
+  customer: CustomerWhereUniqueInput!
+  reservableSlot: ReservableSlotWhereUniqueInput
+  reservationNotifications: ReservationNotificationCreateNestedManyWithoutReservationsInput
+}
+
+input ReservationCreateNestedManyWithoutCustomersInput {
+  connect: [ReservationWhereUniqueInput!]
+}
+
+input ReservationCreateNestedManyWithoutReservableSlotsInput {
+  connect: [ReservationWhereUniqueInput!]
+}
+
+input ReservationListRelationFilter {
+  every: ReservationWhereInput
+  none: ReservationWhereInput
+  some: ReservationWhereInput
+}
+
+type ReservationNotification {
+  createdAt: DateTime!
+  id: String!
+  notification: Notification
+  reservation: Reservation
+  updatedAt: DateTime!
+}
+
+input ReservationNotificationCreateInput {
+  notification: NotificationWhereUniqueInput!
+  reservation: ReservationWhereUniqueInput!
+}
+
+input ReservationNotificationCreateNestedManyWithoutNotificationsInput {
+  connect: [ReservationNotificationWhereUniqueInput!]
+}
+
+input ReservationNotificationCreateNestedManyWithoutReservationsInput {
+  connect: [ReservationNotificationWhereUniqueInput!]
+}
+
+input ReservationNotificationListRelationFilter {
+  every: ReservationNotificationWhereInput
+  none: ReservationNotificationWhereInput
+  some: ReservationNotificationWhereInput
+}
+
+input ReservationNotificationOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  notificationId: SortOrder
+  reservationId: SortOrder
+  updatedAt: SortOrder
+}
+
+input ReservationNotificationUpdateInput {
+  notification: NotificationWhereUniqueInput
+  reservation: ReservationWhereUniqueInput
+}
+
+input ReservationNotificationUpdateManyWithoutNotificationsInput {
+  connect: [ReservationNotificationWhereUniqueInput!]
+  disconnect: [ReservationNotificationWhereUniqueInput!]
+  set: [ReservationNotificationWhereUniqueInput!]
+}
+
+input ReservationNotificationUpdateManyWithoutReservationsInput {
+  connect: [ReservationNotificationWhereUniqueInput!]
+  disconnect: [ReservationNotificationWhereUniqueInput!]
+  set: [ReservationNotificationWhereUniqueInput!]
+}
+
+input ReservationNotificationWhereInput {
+  id: StringFilter
+  notification: NotificationWhereUniqueInput
+  reservation: ReservationWhereUniqueInput
+}
+
+input ReservationNotificationWhereUniqueInput {
+  id: String!
+}
+
+input ReservationOrderByInput {
+  createdAt: SortOrder
+  customerId: SortOrder
+  id: SortOrder
+  reservableSlotId: SortOrder
+  updatedAt: SortOrder
+}
+
+input ReservationUpdateInput {
+  customer: CustomerWhereUniqueInput
+  reservableSlot: ReservableSlotWhereUniqueInput
+  reservationNotifications: ReservationNotificationUpdateManyWithoutReservationsInput
+}
+
+input ReservationUpdateManyWithoutCustomersInput {
+  connect: [ReservationWhereUniqueInput!]
+  disconnect: [ReservationWhereUniqueInput!]
+  set: [ReservationWhereUniqueInput!]
+}
+
+input ReservationUpdateManyWithoutReservableSlotsInput {
+  connect: [ReservationWhereUniqueInput!]
+  disconnect: [ReservationWhereUniqueInput!]
+  set: [ReservationWhereUniqueInput!]
+}
+
+input ReservationWhereInput {
+  customer: CustomerWhereUniqueInput
+  id: StringFilter
+  reservableSlot: ReservableSlotWhereUniqueInput
+  reservationNotifications: ReservationNotificationListRelationFilter
+}
+
+input ReservationWhereUniqueInput {
+  id: String!
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type TimeSlot {
+  availabilities(orderBy: [ReservableSlotOrderByInput!], skip: Float, take: Float, where: ReservableSlotWhereInput): [ReservableSlot!]!
+  company: Company
+  createdAt: DateTime!
+  dayOfWeek: DayOfWeek
+  id: String!
+  maxSeatsAvailable: Float!
+  timeFrom: String!
+  timeSlotNotifications(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): [CompanySetNotification!]!
+  timeTo: String!
+  updatedAt: DateTime!
+}
+
+input TimeSlotCreateInput {
+  availabilities: ReservableSlotCreateNestedManyWithoutTimeSlotsInput
+  company: CompanyWhereUniqueInput!
+  dayOfWeek: DayOfWeekWhereUniqueInput
+  maxSeatsAvailable: Float!
+  timeFrom: String!
+  timeSlotNotifications: CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput
+  timeTo: String!
+}
+
+input TimeSlotCreateNestedManyWithoutCompaniesInput {
+  connect: [TimeSlotWhereUniqueInput!]
+}
+
+input TimeSlotCreateNestedManyWithoutDayOfWeeksInput {
+  connect: [TimeSlotWhereUniqueInput!]
+}
+
+input TimeSlotListRelationFilter {
+  every: TimeSlotWhereInput
+  none: TimeSlotWhereInput
+  some: TimeSlotWhereInput
+}
+
+input TimeSlotOrderByInput {
+  companyId: SortOrder
+  createdAt: SortOrder
+  dayOfWeekId: SortOrder
+  id: SortOrder
+  maxSeatsAvailable: SortOrder
+  timeFrom: SortOrder
+  timeTo: SortOrder
+  updatedAt: SortOrder
+}
+
+input TimeSlotUpdateInput {
+  availabilities: ReservableSlotUpdateManyWithoutTimeSlotsInput
+  company: CompanyWhereUniqueInput
+  dayOfWeek: DayOfWeekWhereUniqueInput
+  maxSeatsAvailable: Float
+  timeFrom: String
+  timeSlotNotifications: CompanySetNotificationUpdateManyWithoutTimeSlotsInput
+  timeTo: String
+}
+
+input TimeSlotUpdateManyWithoutCompaniesInput {
+  connect: [TimeSlotWhereUniqueInput!]
+  disconnect: [TimeSlotWhereUniqueInput!]
+  set: [TimeSlotWhereUniqueInput!]
+}
+
+input TimeSlotUpdateManyWithoutDayOfWeeksInput {
+  connect: [TimeSlotWhereUniqueInput!]
+  disconnect: [TimeSlotWhereUniqueInput!]
+  set: [TimeSlotWhereUniqueInput!]
+}
+
+input TimeSlotWhereInput {
+  availabilities: ReservableSlotListRelationFilter
+  company: CompanyWhereUniqueInput
+  dayOfWeek: DayOfWeekWhereUniqueInput
+  id: StringFilter
+  maxSeatsAvailable: IntFilter
+  timeFrom: StringFilter
+  timeSlotNotifications: CompanySetNotificationListRelationFilter
+  timeTo: StringFilter
+}
+
+input TimeSlotWhereUniqueInput {
+  id: String!
+}
+
+type User {
+  createdAt: DateTime!
+  firstName: String
+  id: String!
+  lastName: String
+  roles: [String!]!
+  updatedAt: DateTime!
+  username: String!
+}
+
+input UserCreateInput {
+  firstName: String
+  lastName: String
+  password: String!
+  roles: [String!]!
+  username: String!
+}
+
+type UserInfo {
+  accessToken: String
+  roles: [String!]!
+  username: String!
+}
+
+input UserOrderByInput {
+  createdAt: SortOrder
+  firstName: SortOrder
+  id: SortOrder
+  lastName: SortOrder
+  password: SortOrder
+  roles: SortOrder
+  updatedAt: SortOrder
+  username: SortOrder
+}
+
+input UserUpdateInput {
+  firstName: String
+  lastName: String
+  password: String
+  roles: [String!]
+  username: String
+}
+
+input UserWhereInput {
+  firstName: StringNullableFilter
+  id: StringFilter
+  lastName: StringNullableFilter
+  username: StringFilter
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}
