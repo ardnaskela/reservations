@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { FavoriteCompanyListRelationFilter } from "../../favoriteCompany/base/FavoriteCompanyListRelationFilter";
 import { CompanyListRelationFilter } from "../../company/base/CompanyListRelationFilter";
+import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { LastSeenCompanyListRelationFilter } from "../../lastSeenCompany/base/LastSeenCompanyListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { ReservationListRelationFilter } from "../../reservation/base/ReservationListRelationFilter";
@@ -77,6 +78,17 @@ class CustomerWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: BooleanNullableFilter,
+  })
+  @Type(() => BooleanNullableFilter)
+  @IsOptional()
+  @Field(() => BooleanNullableFilter, {
+    nullable: true,
+  })
+  isVerified?: BooleanNullableFilter;
 
   @ApiProperty({
     required: false,
