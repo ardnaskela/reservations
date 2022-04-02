@@ -5,6 +5,7 @@ export type CustomerOrderByInput = {
   email?: SortOrder;
   firstName?: SortOrder;
   id?: SortOrder;
+  isVerified?: SortOrder;
   lastName?: SortOrder;
   phoneNumber?: SortOrder;
   updatedAt?: SortOrder;

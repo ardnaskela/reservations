@@ -1,5 +1,12 @@
 import * as React from "react";
-import { List, Datagrid, ListProps, DateField, TextField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  ListProps,
+  DateField,
+  TextField,
+  BooleanField,
+} from "react-admin";
 import Pagination from "../Components/Pagination";
 
 export const CustomerList = (props: ListProps): React.ReactElement => {
@@ -16,6 +23,7 @@ export const CustomerList = (props: ListProps): React.ReactElement => {
         <TextField label="email" source="email" />
         <TextField label="firstName" source="firstName" />
         <TextField label="ID" source="id" />
+        <BooleanField label="isVerified" source="isVerified" />
         <TextField label="lastName" source="lastName" />
         <TextField label="phoneNumber" source="phoneNumber" />
         <DateField source="updatedAt" label="Updated At" />
