@@ -121,6 +121,13 @@ export const CustomerShow = (props: ShowProps): React.ReactElement => {
           label="Reservations"
         >
           <Datagrid rowClick="show">
+            <ReferenceField
+              label="Company"
+              source="company.id"
+              reference="Company"
+            >
+              <TextField source={COMPANY_TITLE_FIELD} />
+            </ReferenceField>
             <DateField source="createdAt" label="Created At" />
             <ReferenceField
               label="Customer"

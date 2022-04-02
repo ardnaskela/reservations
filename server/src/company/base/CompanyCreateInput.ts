@@ -19,6 +19,7 @@ import { CompanyTypeWhereUniqueInput } from "../../companyType/base/CompanyTypeW
 import { FavoriteCompanyCreateNestedManyWithoutCompaniesInput } from "./FavoriteCompanyCreateNestedManyWithoutCompaniesInput";
 import { LastSeenCompanyCreateNestedManyWithoutCompaniesInput } from "./LastSeenCompanyCreateNestedManyWithoutCompaniesInput";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
+import { ReservationCreateNestedManyWithoutCompaniesInput } from "./ReservationCreateNestedManyWithoutCompaniesInput";
 import { TimeSlotCreateNestedManyWithoutCompaniesInput } from "./TimeSlotCreateNestedManyWithoutCompaniesInput";
 @InputType()
 class CompanyCreateInput {
@@ -114,6 +115,18 @@ class CompanyCreateInput {
   @IsString()
   @Field(() => String)
   phoneNumber!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => ReservationCreateNestedManyWithoutCompaniesInput,
+  })
+  @ValidateNested()
+  @Type(() => ReservationCreateNestedManyWithoutCompaniesInput)
+  @IsOptional()
+  @Field(() => ReservationCreateNestedManyWithoutCompaniesInput, {
+    nullable: true,
+  })
+  reservations?: ReservationCreateNestedManyWithoutCompaniesInput;
 
   @ApiProperty({
     required: false,

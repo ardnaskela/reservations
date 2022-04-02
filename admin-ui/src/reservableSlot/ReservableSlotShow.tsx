@@ -12,6 +12,7 @@ import {
   Datagrid,
 } from "react-admin";
 
+import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
 import { RESERVABLESLOT_TITLE_FIELD } from "./ReservableSlotTitle";
 import { TIMESLOT_TITLE_FIELD } from "../timeSlot/TimeSlotTitle";
@@ -40,6 +41,13 @@ export const ReservableSlotShow = (props: ShowProps): React.ReactElement => {
           label="Reservations"
         >
           <Datagrid rowClick="show">
+            <ReferenceField
+              label="Company"
+              source="company.id"
+              reference="Company"
+            >
+              <TextField source={COMPANY_TITLE_FIELD} />
+            </ReferenceField>
             <DateField source="createdAt" label="Created At" />
             <ReferenceField
               label="Customer"

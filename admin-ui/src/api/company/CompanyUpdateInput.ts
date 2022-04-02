@@ -4,6 +4,7 @@ import { CompanyTypeWhereUniqueInput } from "../companyType/CompanyTypeWhereUniq
 import { FavoriteCompanyUpdateManyWithoutCompaniesInput } from "./FavoriteCompanyUpdateManyWithoutCompaniesInput";
 import { LastSeenCompanyUpdateManyWithoutCompaniesInput } from "./LastSeenCompanyUpdateManyWithoutCompaniesInput";
 import { CustomerWhereUniqueInput } from "../customer/CustomerWhereUniqueInput";
+import { ReservationUpdateManyWithoutCompaniesInput } from "./ReservationUpdateManyWithoutCompaniesInput";
 import { TimeSlotUpdateManyWithoutCompaniesInput } from "./TimeSlotUpdateManyWithoutCompaniesInput";
 
 export type CompanyUpdateInput = {
@@ -16,6 +17,7 @@ export type CompanyUpdateInput = {
   name?: string;
   owner?: CustomerWhereUniqueInput;
   phoneNumber?: string;
+  reservations?: ReservationUpdateManyWithoutCompaniesInput;
   timeSlots?: TimeSlotUpdateManyWithoutCompaniesInput;
   vatCode?: string;
 };

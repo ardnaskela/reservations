@@ -1,12 +1,11 @@
 import { Company } from "../company/Company";
 import { Notification } from "../notification/Notification";
-import { TimeSlot } from "../timeSlot/TimeSlot";
 
 export type CompanySetNotification = {
   company?: Company;
   createdAt: Date;
+  customText: string | null;
   id: string;
   notification?: Notification;
-  timeSlot?: TimeSlot | null;
   updatedAt: Date;
 };

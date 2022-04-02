@@ -9,13 +9,13 @@ import {
   DateField,
   ReferenceManyField,
   Datagrid,
+  BooleanField,
 } from "react-admin";
 
 import { COMPANY_TITLE_FIELD } from "./CompanyTitle";
 import { NOTIFICATION_TITLE_FIELD } from "../notification/NotificationTitle";
-import { TIMESLOT_TITLE_FIELD } from "../timeSlot/TimeSlotTitle";
 import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
-import { DAYOFWEEK_TITLE_FIELD } from "../dayOfWeek/DayOfWeekTitle";
+import { RESERVABLESLOT_TITLE_FIELD } from "../reservableSlot/ReservableSlotTitle";
 import { ADDRESS_TITLE_FIELD } from "../address/AddressTitle";
 import { COMPANYTYPE_TITLE_FIELD } from "../companyType/CompanyTypeTitle";
 
@@ -57,6 +57,7 @@ export const CompanyShow = (props: ShowProps): React.ReactElement => {
               <TextField source={COMPANY_TITLE_FIELD} />
             </ReferenceField>
             <DateField source="createdAt" label="Created At" />
+            <TextField label="customText" source="customText" />
             <TextField label="ID" source="id" />
             <ReferenceField
               label="Notification"
@@ -64,13 +65,6 @@ export const CompanyShow = (props: ShowProps): React.ReactElement => {
               reference="Notification"
             >
               <TextField source={NOTIFICATION_TITLE_FIELD} />
-            </ReferenceField>
-            <ReferenceField
-              label="TimeSlot"
-              source="timeslot.id"
-              reference="TimeSlot"
-            >
-              <TextField source={TIMESLOT_TITLE_FIELD} />
             </ReferenceField>
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>
@@ -126,6 +120,39 @@ export const CompanyShow = (props: ShowProps): React.ReactElement => {
           </Datagrid>
         </ReferenceManyField>
         <ReferenceManyField
+          reference="Reservation"
+          target="CompanyId"
+          label="Reservations"
+        >
+          <Datagrid rowClick="show">
+            <ReferenceField
+              label="Company"
+              source="company.id"
+              reference="Company"
+            >
+              <TextField source={COMPANY_TITLE_FIELD} />
+            </ReferenceField>
+            <DateField source="createdAt" label="Created At" />
+            <ReferenceField
+              label="Customer"
+              source="customer.id"
+              reference="Customer"
+            >
+              <TextField source={CUSTOMER_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField label="ID" source="id" />
+            <BooleanField label="isAccepted" source="isAccepted" />
+            <ReferenceField
+              label="ReservableSlot"
+              source="reservableslot.id"
+              reference="ReservableSlot"
+            >
+              <TextField source={RESERVABLESLOT_TITLE_FIELD} />
+            </ReferenceField>
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
+        <ReferenceManyField
           reference="TimeSlot"
           target="CompanyId"
           label="TimeSlots"
@@ -139,13 +166,7 @@ export const CompanyShow = (props: ShowProps): React.ReactElement => {
               <TextField source={COMPANY_TITLE_FIELD} />
             </ReferenceField>
             <DateField source="createdAt" label="Created At" />
-            <ReferenceField
-              label="dayOfWeek"
-              source="dayofweek.id"
-              reference="DayOfWeek"
-            >
-              <TextField source={DAYOFWEEK_TITLE_FIELD} />
-            </ReferenceField>
+            <TextField label="dayOfWeek" source="dayOfWeek" />
             <TextField label="ID" source="id" />
             <TextField label="maxSeatsAvailable" source="maxSeatsAvailable" />
             <TextField label="timeFrom" source="timeFrom" />

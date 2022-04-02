@@ -17,6 +17,7 @@ export const ReservationNotificationShow = (
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
+        <TextField label="customText" source="customText" />
         <TextField label="ID" source="id" />
         <ReferenceField
           label="Notification"

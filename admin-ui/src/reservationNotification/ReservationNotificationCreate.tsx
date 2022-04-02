@@ -3,6 +3,7 @@ import {
   Create,
   SimpleForm,
   CreateProps,
+  TextInput,
   ReferenceInput,
   SelectInput,
 } from "react-admin";
@@ -15,6 +16,7 @@ export const ReservationNotificationCreate = (
   return (
     <Create {...props}>
       <SimpleForm>
+        <TextInput label="customText" source="customText" />
         <ReferenceInput
           source="notification.id"
           reference="Notification"

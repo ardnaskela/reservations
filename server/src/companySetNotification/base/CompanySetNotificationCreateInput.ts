@@ -12,10 +12,9 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { ValidateNested, IsString, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { NotificationWhereUniqueInput } from "../../notification/base/NotificationWhereUniqueInput";
-import { TimeSlotWhereUniqueInput } from "../../timeSlot/base/TimeSlotWhereUniqueInput";
 @InputType()
 class CompanySetNotificationCreateInput {
   @ApiProperty({
@@ -28,6 +27,17 @@ class CompanySetNotificationCreateInput {
   company!: CompanyWhereUniqueInput;
 
   @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  customText?: string | null;
+
+  @ApiProperty({
     required: true,
     type: () => NotificationWhereUniqueInput,
   })
@@ -35,17 +45,5 @@ class CompanySetNotificationCreateInput {
   @Type(() => NotificationWhereUniqueInput)
   @Field(() => NotificationWhereUniqueInput)
   notification!: NotificationWhereUniqueInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => TimeSlotWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => TimeSlotWhereUniqueInput)
-  @IsOptional()
-  @Field(() => TimeSlotWhereUniqueInput, {
-    nullable: true,
-  })
-  timeSlot?: TimeSlotWhereUniqueInput | null;
 }
 export { CompanySetNotificationCreateInput };

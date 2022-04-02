@@ -15,7 +15,6 @@ import { Company } from "../../company/base/Company";
 import { ValidateNested, IsDate, IsString, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { Notification } from "../../notification/base/Notification";
-import { TimeSlot } from "../../timeSlot/base/TimeSlot";
 @ObjectType()
 class CompanySetNotification {
   @ApiProperty({
@@ -35,6 +34,17 @@ class CompanySetNotification {
   createdAt!: Date;
 
   @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  customText!: string | null;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
@@ -49,15 +59,6 @@ class CompanySetNotification {
   @ValidateNested()
   @Type(() => Notification)
   notification?: Notification;
-
-  @ApiProperty({
-    required: false,
-    type: () => TimeSlot,
-  })
-  @ValidateNested()
-  @Type(() => TimeSlot)
-  @IsOptional()
-  timeSlot?: TimeSlot | null;
 
   @ApiProperty({
     required: true,

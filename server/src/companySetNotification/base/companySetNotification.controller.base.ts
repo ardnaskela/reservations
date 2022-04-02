@@ -80,12 +80,6 @@ export class CompanySetNotificationControllerBase {
         notification: {
           connect: data.notification,
         },
-
-        timeSlot: data.timeSlot
-          ? {
-              connect: data.timeSlot,
-            }
-          : undefined,
       },
       select: {
         company: {
@@ -95,15 +89,10 @@ export class CompanySetNotificationControllerBase {
         },
 
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
-          select: {
-            id: true,
-          },
-        },
-
-        timeSlot: {
           select: {
             id: true,
           },
@@ -153,15 +142,10 @@ export class CompanySetNotificationControllerBase {
         },
 
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
-          select: {
-            id: true,
-          },
-        },
-
-        timeSlot: {
           select: {
             id: true,
           },
@@ -207,15 +191,10 @@ export class CompanySetNotificationControllerBase {
         },
 
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
-          select: {
-            id: true,
-          },
-        },
-
-        timeSlot: {
           select: {
             id: true,
           },
@@ -283,12 +262,6 @@ export class CompanySetNotificationControllerBase {
           notification: {
             connect: data.notification,
           },
-
-          timeSlot: data.timeSlot
-            ? {
-                connect: data.timeSlot,
-              }
-            : undefined,
         },
         select: {
           company: {
@@ -298,15 +271,10 @@ export class CompanySetNotificationControllerBase {
           },
 
           createdAt: true,
+          customText: true,
           id: true,
 
           notification: {
-            select: {
-              id: true,
-            },
-          },
-
-          timeSlot: {
             select: {
               id: true,
             },
@@ -353,15 +321,10 @@ export class CompanySetNotificationControllerBase {
           },
 
           createdAt: true,
+          customText: true,
           id: true,
 
           notification: {
-            select: {
-              id: true,
-            },
-          },
-
-          timeSlot: {
             select: {
               id: true,
             },

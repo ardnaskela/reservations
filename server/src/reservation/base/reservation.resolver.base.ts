@@ -27,6 +27,7 @@ import { ReservationFindUniqueArgs } from "./ReservationFindUniqueArgs";
 import { Reservation } from "./Reservation";
 import { ReservationNotificationFindManyArgs } from "../../reservationNotification/base/ReservationNotificationFindManyArgs";
 import { ReservationNotification } from "../../reservationNotification/base/ReservationNotification";
+import { Company } from "../../company/base/Company";
 import { Customer } from "../../customer/base/Customer";
 import { ReservableSlot } from "../../reservableSlot/base/ReservableSlot";
 import { ReservationService } from "../reservation.service";
@@ -138,6 +139,12 @@ export class ReservationResolverBase {
       data: {
         ...args.data,
 
+        company: args.data.company
+          ? {
+              connect: args.data.company,
+            }
+          : undefined,
+
         customer: {
           connect: args.data.customer,
         },
@@ -188,6 +195,12 @@ export class ReservationResolverBase {
         ...args,
         data: {
           ...args.data,
+
+          company: args.data.company
+            ? {
+                connect: args.data.company,
+              }
+            : undefined,
 
           customer: {
             connect: args.data.customer,
@@ -259,6 +272,30 @@ export class ReservationResolverBase {
     }
 
     return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => Company, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Reservation",
+    action: "read",
+    possession: "any",
+  })
+  async company(
+    @graphql.Parent() parent: Reservation,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Company | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Company",
+    });
+    const result = await this.service.getCompany(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
   }
 
   @graphql.ResolveField(() => Customer, { nullable: true })

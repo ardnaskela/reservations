@@ -27,10 +27,7 @@ import { TimeSlotFindUniqueArgs } from "./TimeSlotFindUniqueArgs";
 import { TimeSlot } from "./TimeSlot";
 import { ReservableSlotFindManyArgs } from "../../reservableSlot/base/ReservableSlotFindManyArgs";
 import { ReservableSlot } from "../../reservableSlot/base/ReservableSlot";
-import { CompanySetNotificationFindManyArgs } from "../../companySetNotification/base/CompanySetNotificationFindManyArgs";
-import { CompanySetNotification } from "../../companySetNotification/base/CompanySetNotification";
 import { Company } from "../../company/base/Company";
-import { DayOfWeek } from "../../dayOfWeek/base/DayOfWeek";
 import { TimeSlotService } from "../timeSlot.service";
 
 @graphql.Resolver(() => TimeSlot)
@@ -143,12 +140,6 @@ export class TimeSlotResolverBase {
         company: {
           connect: args.data.company,
         },
-
-        dayOfWeek: args.data.dayOfWeek
-          ? {
-              connect: args.data.dayOfWeek,
-            }
-          : undefined,
       },
     });
   }
@@ -194,12 +185,6 @@ export class TimeSlotResolverBase {
           company: {
             connect: args.data.company,
           },
-
-          dayOfWeek: args.data.dayOfWeek
-            ? {
-                connect: args.data.dayOfWeek,
-              }
-            : undefined,
         },
       });
     } catch (error) {
@@ -260,35 +245,6 @@ export class TimeSlotResolverBase {
     return results.map((result) => permission.filter(result));
   }
 
-  @graphql.ResolveField(() => [CompanySetNotification])
-  @nestAccessControl.UseRoles({
-    resource: "TimeSlot",
-    action: "read",
-    possession: "any",
-  })
-  async timeSlotNotifications(
-    @graphql.Parent() parent: TimeSlot,
-    @graphql.Args() args: CompanySetNotificationFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<CompanySetNotification[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "CompanySetNotification",
-    });
-    const results = await this.service.findTimeSlotNotifications(
-      parent.id,
-      args
-    );
-
-    if (!results) {
-      return [];
-    }
-
-    return results.map((result) => permission.filter(result));
-  }
-
   @graphql.ResolveField(() => Company, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "TimeSlot",
@@ -306,30 +262,6 @@ export class TimeSlotResolverBase {
       resource: "Company",
     });
     const result = await this.service.getCompany(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return permission.filter(result);
-  }
-
-  @graphql.ResolveField(() => DayOfWeek, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "TimeSlot",
-    action: "read",
-    possession: "any",
-  })
-  async dayOfWeek(
-    @graphql.Parent() parent: TimeSlot,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<DayOfWeek | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "DayOfWeek",
-    });
-    const result = await this.service.getDayOfWeek(parent.id);
 
     if (!result) {
       return null;

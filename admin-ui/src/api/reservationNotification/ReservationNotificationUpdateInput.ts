@@ -2,6 +2,7 @@ import { NotificationWhereUniqueInput } from "../notification/NotificationWhereU
 import { ReservationWhereUniqueInput } from "../reservation/ReservationWhereUniqueInput";
 
 export type ReservationNotificationUpdateInput = {
+  customText?: string | null;
   notification?: NotificationWhereUniqueInput;
   reservation?: ReservationWhereUniqueInput;
 };
