@@ -8,6 +8,7 @@ export type CustomerUpdateInput = {
   favoriteCompanies?: FavoriteCompanyUpdateManyWithoutCustomersInput;
   firstName?: string;
   handledCompanies?: CompanyUpdateManyWithoutCustomersInput;
+  isVerified?: boolean | null;
   lastName?: string;
   lastSeenCompanies?: LastSeenCompanyUpdateManyWithoutCustomersInput;
   phoneNumber?: string | null;
