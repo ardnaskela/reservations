@@ -36,8 +36,8 @@ model Company {
   address                 Address                  @relation(fields: [addressId], references: [id])
   addressId               String
   companySetNotifications CompanySetNotification[]
-  companyType             CompanyType?             @relation(fields: [companyTypeId], references: [id])
-  companyTypeId           String?
+  companyType             CompanyType              @relation(fields: [companyTypeId], references: [id])
+  companyTypeId           String
   createdAt               DateTime                 @default(now())
   favoriteCompanies       FavoriteCompany[]
   id                      String                   @id @default(cuid())
@@ -47,6 +47,7 @@ model Company {
   owner                   Customer                 @relation(fields: [ownerId], references: [id])
   ownerId                 String
   phoneNumber             String
+  reservations            Reservation[]
   timeSlots               TimeSlot[]
   updatedAt               DateTime                 @updatedAt
   vatCode                 String                   @unique
@@ -74,27 +75,16 @@ model CompanyType {
 }
 
 model TimeSlot {
-  company               Company                  @relation(fields: [companyId], references: [id])
-  companyId             String
-  createdAt             DateTime                 @default(now())
-  dayOfWeek             DayOfWeek?               @relation(fields: [dayOfWeekId], references: [id])
-  dayOfWeekId           String?
-  id                    String                   @id @default(cuid())
-  maxSeatsAvailable     Int
-  reservableSlots       ReservableSlot[]
-  timeFrom              String
-  timeSlotNotifications CompanySetNotification[]
-  timeTo                String
-  updatedAt             DateTime                 @updatedAt
-}
-
-model DayOfWeek {
-  code        String     @unique
-  createdAt   DateTime   @default(now())
-  description String
-  id          String     @id @default(cuid())
-  timeSlots   TimeSlot[]
-  updatedAt   DateTime   @updatedAt
+  company           Company                @relation(fields: [companyId], references: [id])
+  companyId         String
+  createdAt         DateTime               @default(now())
+  dayOfWeek         EnumTimeSlotDayOfWeek?
+  id                String                 @id @default(cuid())
+  maxSeatsAvailable Int?
+  reservableSlots   ReservableSlot[]
+  timeFrom          String
+  timeTo            String
+  updatedAt         DateTime               @updatedAt
 }
 
 model FavoriteCompany {
@@ -118,6 +108,8 @@ model LastSeenCompany {
 }
 
 model Reservation {
+  company                  Company?                  @relation(fields: [companyId], references: [id])
+  companyId                String?
   createdAt                DateTime                  @default(now())
   customer                 Customer                  @relation(fields: [customerId], references: [id])
   customerId               String
@@ -155,20 +147,30 @@ model CompanySetNotification {
   company        Company      @relation(fields: [companyId], references: [id])
   companyId      String
   createdAt      DateTime     @default(now())
+  customText     String?
   id             String       @id @default(cuid())
   notification   Notification @relation(fields: [notificationId], references: [id])
   notificationId String
-  timeSlot       TimeSlot?    @relation(fields: [timeSlotId], references: [id])
-  timeSlotId     String?
   updatedAt      DateTime     @updatedAt
 }
 
 model ReservationNotification {
   createdAt      DateTime     @default(now())
+  customText     String?
   id             String       @id @default(cuid())
   notification   Notification @relation(fields: [notificationId], references: [id])
   notificationId String
   reservation    Reservation  @relation(fields: [reservationId], references: [id])
   reservationId  String
   updatedAt      DateTime     @updatedAt
+}
+
+enum EnumTimeSlotDayOfWeek {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
 }

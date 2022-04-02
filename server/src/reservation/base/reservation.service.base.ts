@@ -10,10 +10,12 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
+
 import {
   Prisma,
   Reservation,
   ReservationNotification,
+  Company,
   Customer,
   ReservableSlot,
 } from "@prisma/client";
@@ -62,6 +64,14 @@ export class ReservationServiceBase {
         where: { id: parentId },
       })
       .reservationNotifications(args);
+  }
+
+  async getCompany(parentId: string): Promise<Company | null> {
+    return this.prisma.reservation
+      .findUnique({
+        where: { id: parentId },
+      })
+      .company();
   }
 
   async getCustomer(parentId: string): Promise<Customer | null> {

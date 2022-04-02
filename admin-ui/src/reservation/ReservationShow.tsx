@@ -4,9 +4,9 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  DateField,
   ReferenceField,
   TextField,
+  DateField,
   BooleanField,
   ReferenceManyField,
   Datagrid,
@@ -14,6 +14,7 @@ import {
 
 import { NOTIFICATION_TITLE_FIELD } from "../notification/NotificationTitle";
 import { RESERVATION_TITLE_FIELD } from "./ReservationTitle";
+import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
 import { RESERVABLESLOT_TITLE_FIELD } from "../reservableSlot/ReservableSlotTitle";
 
@@ -21,6 +22,9 @@ export const ReservationShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <ReferenceField label="Company" source="company.id" reference="Company">
+          <TextField source={COMPANY_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="createdAt" label="Created At" />
         <ReferenceField
           label="Customer"
@@ -46,6 +50,7 @@ export const ReservationShow = (props: ShowProps): React.ReactElement => {
         >
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
+            <TextField label="customText" source="customText" />
             <TextField label="ID" source="id" />
             <ReferenceField
               label="Notification"

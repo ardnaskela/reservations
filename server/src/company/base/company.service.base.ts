@@ -17,6 +17,7 @@ import {
   CompanySetNotification,
   FavoriteCompany,
   LastSeenCompany,
+  Reservation,
   TimeSlot,
   Address,
   CompanyType,
@@ -89,6 +90,17 @@ export class CompanyServiceBase {
         where: { id: parentId },
       })
       .lastSeenCompanies(args);
+  }
+
+  async findReservations(
+    parentId: string,
+    args: Prisma.ReservationFindManyArgs
+  ): Promise<Reservation[]> {
+    return this.prisma.company
+      .findUnique({
+        where: { id: parentId },
+      })
+      .reservations(args);
   }
 
   async findTimeSlots(

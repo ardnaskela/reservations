@@ -13,7 +13,6 @@ import {
 
 import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
 import { NOTIFICATION_TITLE_FIELD } from "./NotificationTitle";
-import { TIMESLOT_TITLE_FIELD } from "../timeSlot/TimeSlotTitle";
 import { RESERVATION_TITLE_FIELD } from "../reservation/ReservationTitle";
 
 export const NotificationShow = (props: ShowProps): React.ReactElement => {
@@ -38,6 +37,7 @@ export const NotificationShow = (props: ShowProps): React.ReactElement => {
               <TextField source={COMPANY_TITLE_FIELD} />
             </ReferenceField>
             <DateField source="createdAt" label="Created At" />
+            <TextField label="customText" source="customText" />
             <TextField label="ID" source="id" />
             <ReferenceField
               label="Notification"
@@ -45,13 +45,6 @@ export const NotificationShow = (props: ShowProps): React.ReactElement => {
               reference="Notification"
             >
               <TextField source={NOTIFICATION_TITLE_FIELD} />
-            </ReferenceField>
-            <ReferenceField
-              label="TimeSlot"
-              source="timeslot.id"
-              reference="TimeSlot"
-            >
-              <TextField source={TIMESLOT_TITLE_FIELD} />
             </ReferenceField>
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>
@@ -63,6 +56,7 @@ export const NotificationShow = (props: ShowProps): React.ReactElement => {
         >
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
+            <TextField label="customText" source="customText" />
             <TextField label="ID" source="id" />
             <ReferenceField
               label="Notification"

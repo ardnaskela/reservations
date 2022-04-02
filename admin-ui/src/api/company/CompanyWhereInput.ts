@@ -6,6 +6,7 @@ import { StringFilter } from "../../util/StringFilter";
 import { LastSeenCompanyListRelationFilter } from "../lastSeenCompany/LastSeenCompanyListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { CustomerWhereUniqueInput } from "../customer/CustomerWhereUniqueInput";
+import { ReservationListRelationFilter } from "../reservation/ReservationListRelationFilter";
 import { TimeSlotListRelationFilter } from "../timeSlot/TimeSlotListRelationFilter";
 
 export type CompanyWhereInput = {
@@ -19,6 +20,7 @@ export type CompanyWhereInput = {
   name?: StringFilter;
   owner?: CustomerWhereUniqueInput;
   phoneNumber?: StringFilter;
+  reservations?: ReservationListRelationFilter;
   timeSlots?: TimeSlotListRelationFilter;
   vatCode?: StringFilter;
 };

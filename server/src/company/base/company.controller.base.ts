@@ -36,6 +36,9 @@ import { FavoriteCompanyWhereUniqueInput } from "../../favoriteCompany/base/Favo
 import { LastSeenCompanyFindManyArgs } from "../../lastSeenCompany/base/LastSeenCompanyFindManyArgs";
 import { LastSeenCompany } from "../../lastSeenCompany/base/LastSeenCompany";
 import { LastSeenCompanyWhereUniqueInput } from "../../lastSeenCompany/base/LastSeenCompanyWhereUniqueInput";
+import { ReservationFindManyArgs } from "../../reservation/base/ReservationFindManyArgs";
+import { Reservation } from "../../reservation/base/Reservation";
+import { ReservationWhereUniqueInput } from "../../reservation/base/ReservationWhereUniqueInput";
 import { TimeSlotFindManyArgs } from "../../timeSlot/base/TimeSlotFindManyArgs";
 import { TimeSlot } from "../../timeSlot/base/TimeSlot";
 import { TimeSlotWhereUniqueInput } from "../../timeSlot/base/TimeSlotWhereUniqueInput";
@@ -89,11 +92,9 @@ export class CompanyControllerBase {
           connect: data.address,
         },
 
-        companyType: data.companyType
-          ? {
-              connect: data.companyType,
-            }
-          : undefined,
+        companyType: {
+          connect: data.companyType,
+        },
 
         owner: {
           connect: data.owner,
@@ -301,11 +302,9 @@ export class CompanyControllerBase {
             connect: data.address,
           },
 
-          companyType: data.companyType
-            ? {
-                connect: data.companyType,
-              }
-            : undefined,
+          companyType: {
+            connect: data.companyType,
+          },
 
           owner: {
             connect: data.owner,
@@ -446,15 +445,10 @@ export class CompanyControllerBase {
         },
 
         createdAt: true,
+        customText: true,
         id: true,
 
         notification: {
-          select: {
-            id: true,
-          },
-        },
-
-        timeSlot: {
           select: {
             id: true,
           },
@@ -987,6 +981,202 @@ export class CompanyControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
+  @common.Get("/:id/reservations")
+  @nestAccessControl.UseRoles({
+    resource: "Company",
+    action: "read",
+    possession: "any",
+  })
+  @ApiNestedQuery(ReservationFindManyArgs)
+  async findManyReservations(
+    @common.Req() request: Request,
+    @common.Param() params: CompanyWhereUniqueInput,
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<Reservation[]> {
+    const query = plainToClass(ReservationFindManyArgs, request.query);
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Reservation",
+    });
+    const results = await this.service.findReservations(params.id, {
+      ...query,
+      select: {
+        company: {
+          select: {
+            id: true,
+          },
+        },
+
+        createdAt: true,
+
+        customer: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        isAccepted: true,
+
+        reservableSlot: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results.map((result) => permission.filter(result));
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/reservations")
+  @nestAccessControl.UseRoles({
+    resource: "Company",
+    action: "update",
+    possession: "any",
+  })
+  async createReservations(
+    @common.Param() params: CompanyWhereUniqueInput,
+    @common.Body() body: CompanyWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      reservations: {
+        connect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Company",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Company"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/reservations")
+  @nestAccessControl.UseRoles({
+    resource: "Company",
+    action: "update",
+    possession: "any",
+  })
+  async updateReservations(
+    @common.Param() params: CompanyWhereUniqueInput,
+    @common.Body() body: ReservationWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      reservations: {
+        set: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Company",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Company"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/reservations")
+  @nestAccessControl.UseRoles({
+    resource: "Company",
+    action: "update",
+    possession: "any",
+  })
+  async deleteReservations(
+    @common.Param() params: CompanyWhereUniqueInput,
+    @common.Body() body: CompanyWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      reservations: {
+        disconnect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Company",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Company"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
   @common.Get("/:id/timeSlots")
   @nestAccessControl.UseRoles({
     resource: "Company",
@@ -1016,13 +1206,7 @@ export class CompanyControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,

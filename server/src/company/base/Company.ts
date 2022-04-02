@@ -19,6 +19,7 @@ import { CompanyType } from "../../companyType/base/CompanyType";
 import { FavoriteCompany } from "../../favoriteCompany/base/FavoriteCompany";
 import { LastSeenCompany } from "../../lastSeenCompany/base/LastSeenCompany";
 import { Customer } from "../../customer/base/Customer";
+import { Reservation } from "../../reservation/base/Reservation";
 import { TimeSlot } from "../../timeSlot/base/TimeSlot";
 @ObjectType()
 class Company {
@@ -40,13 +41,12 @@ class Company {
   companySetNotifications?: Array<CompanySetNotification>;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => CompanyType,
   })
   @ValidateNested()
   @Type(() => CompanyType)
-  @IsOptional()
-  companyType?: CompanyType | null;
+  companyType?: CompanyType;
 
   @ApiProperty({
     required: true,
@@ -116,6 +116,15 @@ class Company {
   @IsString()
   @Field(() => String)
   phoneNumber!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Reservation],
+  })
+  @ValidateNested()
+  @Type(() => Reservation)
+  @IsOptional()
+  reservations?: Array<Reservation>;
 
   @ApiProperty({
     required: false,

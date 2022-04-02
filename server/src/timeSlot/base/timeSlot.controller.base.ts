@@ -30,9 +30,6 @@ import { TimeSlot } from "./TimeSlot";
 import { ReservableSlotFindManyArgs } from "../../reservableSlot/base/ReservableSlotFindManyArgs";
 import { ReservableSlot } from "../../reservableSlot/base/ReservableSlot";
 import { ReservableSlotWhereUniqueInput } from "../../reservableSlot/base/ReservableSlotWhereUniqueInput";
-import { CompanySetNotificationFindManyArgs } from "../../companySetNotification/base/CompanySetNotificationFindManyArgs";
-import { CompanySetNotification } from "../../companySetNotification/base/CompanySetNotification";
-import { CompanySetNotificationWhereUniqueInput } from "../../companySetNotification/base/CompanySetNotificationWhereUniqueInput";
 @swagger.ApiBearerAuth()
 export class TimeSlotControllerBase {
   constructor(
@@ -82,12 +79,6 @@ export class TimeSlotControllerBase {
         company: {
           connect: data.company,
         },
-
-        dayOfWeek: data.dayOfWeek
-          ? {
-              connect: data.dayOfWeek,
-            }
-          : undefined,
       },
       select: {
         company: {
@@ -97,13 +88,7 @@ export class TimeSlotControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
@@ -149,13 +134,7 @@ export class TimeSlotControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
@@ -200,13 +179,7 @@ export class TimeSlotControllerBase {
         },
 
         createdAt: true,
-
-        dayOfWeek: {
-          select: {
-            id: true,
-          },
-        },
-
+        dayOfWeek: true,
         id: true,
         maxSeatsAvailable: true,
         timeFrom: true,
@@ -269,12 +242,6 @@ export class TimeSlotControllerBase {
           company: {
             connect: data.company,
           },
-
-          dayOfWeek: data.dayOfWeek
-            ? {
-                connect: data.dayOfWeek,
-              }
-            : undefined,
         },
         select: {
           company: {
@@ -284,13 +251,7 @@ export class TimeSlotControllerBase {
           },
 
           createdAt: true,
-
-          dayOfWeek: {
-            select: {
-              id: true,
-            },
-          },
-
+          dayOfWeek: true,
           id: true,
           maxSeatsAvailable: true,
           timeFrom: true,
@@ -336,13 +297,7 @@ export class TimeSlotControllerBase {
           },
 
           createdAt: true,
-
-          dayOfWeek: {
-            select: {
-              id: true,
-            },
-          },
-
+          dayOfWeek: true,
           id: true,
           maxSeatsAvailable: true,
           timeFrom: true,
@@ -519,203 +474,6 @@ export class TimeSlotControllerBase {
   ): Promise<void> {
     const data = {
       reservableSlots: {
-        disconnect: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "TimeSlot",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"TimeSlot"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id/timeSlotNotifications")
-  @nestAccessControl.UseRoles({
-    resource: "TimeSlot",
-    action: "read",
-    possession: "any",
-  })
-  @ApiNestedQuery(CompanySetNotificationFindManyArgs)
-  async findManyTimeSlotNotifications(
-    @common.Req() request: Request,
-    @common.Param() params: TimeSlotWhereUniqueInput,
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<CompanySetNotification[]> {
-    const query = plainToClass(
-      CompanySetNotificationFindManyArgs,
-      request.query
-    );
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "CompanySetNotification",
-    });
-    const results = await this.service.findTimeSlotNotifications(params.id, {
-      ...query,
-      select: {
-        company: {
-          select: {
-            id: true,
-          },
-        },
-
-        createdAt: true,
-        id: true,
-
-        notification: {
-          select: {
-            id: true,
-          },
-        },
-
-        timeSlot: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results.map((result) => permission.filter(result));
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/timeSlotNotifications")
-  @nestAccessControl.UseRoles({
-    resource: "TimeSlot",
-    action: "update",
-    possession: "any",
-  })
-  async createTimeSlotNotifications(
-    @common.Param() params: TimeSlotWhereUniqueInput,
-    @common.Body() body: TimeSlotWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      timeSlotNotifications: {
-        connect: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "TimeSlot",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"TimeSlot"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/timeSlotNotifications")
-  @nestAccessControl.UseRoles({
-    resource: "TimeSlot",
-    action: "update",
-    possession: "any",
-  })
-  async updateTimeSlotNotifications(
-    @common.Param() params: TimeSlotWhereUniqueInput,
-    @common.Body() body: CompanySetNotificationWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      timeSlotNotifications: {
-        set: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "TimeSlot",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"TimeSlot"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/timeSlotNotifications")
-  @nestAccessControl.UseRoles({
-    resource: "TimeSlot",
-    action: "update",
-    possession: "any",
-  })
-  async deleteTimeSlotNotifications(
-    @common.Param() params: TimeSlotWhereUniqueInput,
-    @common.Body() body: TimeSlotWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      timeSlotNotifications: {
         disconnect: body,
       },
     };

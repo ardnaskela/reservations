@@ -4,18 +4,20 @@ import { CompanyTypeWhereUniqueInput } from "../companyType/CompanyTypeWhereUniq
 import { FavoriteCompanyCreateNestedManyWithoutCompaniesInput } from "./FavoriteCompanyCreateNestedManyWithoutCompaniesInput";
 import { LastSeenCompanyCreateNestedManyWithoutCompaniesInput } from "./LastSeenCompanyCreateNestedManyWithoutCompaniesInput";
 import { CustomerWhereUniqueInput } from "../customer/CustomerWhereUniqueInput";
+import { ReservationCreateNestedManyWithoutCompaniesInput } from "./ReservationCreateNestedManyWithoutCompaniesInput";
 import { TimeSlotCreateNestedManyWithoutCompaniesInput } from "./TimeSlotCreateNestedManyWithoutCompaniesInput";
 
 export type CompanyCreateInput = {
   address: AddressWhereUniqueInput;
   companySetNotifications?: CompanySetNotificationCreateNestedManyWithoutCompaniesInput;
-  companyType?: CompanyTypeWhereUniqueInput | null;
+  companyType: CompanyTypeWhereUniqueInput;
   favoriteCompanies?: FavoriteCompanyCreateNestedManyWithoutCompaniesInput;
   lastSeenCompanies?: LastSeenCompanyCreateNestedManyWithoutCompaniesInput;
   logo?: string | null;
   name: string;
   owner: CustomerWhereUniqueInput;
   phoneNumber: string;
+  reservations?: ReservationCreateNestedManyWithoutCompaniesInput;
   timeSlots?: TimeSlotCreateNestedManyWithoutCompaniesInput;
   vatCode: string;
 };

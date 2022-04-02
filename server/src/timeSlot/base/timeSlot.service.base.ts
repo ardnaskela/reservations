@@ -10,15 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-
-import {
-  Prisma,
-  TimeSlot,
-  ReservableSlot,
-  CompanySetNotification,
-  Company,
-  DayOfWeek,
-} from "@prisma/client";
+import { Prisma, TimeSlot, ReservableSlot, Company } from "@prisma/client";
 
 export class TimeSlotServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -66,30 +58,11 @@ export class TimeSlotServiceBase {
       .reservableSlots(args);
   }
 
-  async findTimeSlotNotifications(
-    parentId: string,
-    args: Prisma.CompanySetNotificationFindManyArgs
-  ): Promise<CompanySetNotification[]> {
-    return this.prisma.timeSlot
-      .findUnique({
-        where: { id: parentId },
-      })
-      .timeSlotNotifications(args);
-  }
-
   async getCompany(parentId: string): Promise<Company | null> {
     return this.prisma.timeSlot
       .findUnique({
         where: { id: parentId },
       })
       .company();
-  }
-
-  async getDayOfWeek(parentId: string): Promise<DayOfWeek | null> {
-    return this.prisma.timeSlot
-      .findUnique({
-        where: { id: parentId },
-      })
-      .dayOfWeek();
   }
 }

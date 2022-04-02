@@ -29,10 +29,6 @@ import { TimeSlotList } from "./timeSlot/TimeSlotList";
 import { TimeSlotCreate } from "./timeSlot/TimeSlotCreate";
 import { TimeSlotEdit } from "./timeSlot/TimeSlotEdit";
 import { TimeSlotShow } from "./timeSlot/TimeSlotShow";
-import { DayOfWeekList } from "./dayOfWeek/DayOfWeekList";
-import { DayOfWeekCreate } from "./dayOfWeek/DayOfWeekCreate";
-import { DayOfWeekEdit } from "./dayOfWeek/DayOfWeekEdit";
-import { DayOfWeekShow } from "./dayOfWeek/DayOfWeekShow";
 import { FavoriteCompanyList } from "./favoriteCompany/FavoriteCompanyList";
 import { FavoriteCompanyCreate } from "./favoriteCompany/FavoriteCompanyCreate";
 import { FavoriteCompanyEdit } from "./favoriteCompany/FavoriteCompanyEdit";
@@ -128,13 +124,6 @@ const App = (): React.ReactElement => {
           edit={TimeSlotEdit}
           create={TimeSlotCreate}
           show={TimeSlotShow}
-        />
-        <Resource
-          name="DayOfWeek"
-          list={DayOfWeekList}
-          edit={DayOfWeekEdit}
-          create={DayOfWeekCreate}
-          show={DayOfWeekShow}
         />
         <Resource
           name="FavoriteCompany"
