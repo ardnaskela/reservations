@@ -7,7 +7,6 @@ import {
   TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
-  BooleanInput,
 } from "react-admin";
 
 import { FavoriteCompanyTitle } from "../favoriteCompany/FavoriteCompanyTitle";
@@ -37,7 +36,6 @@ export const CustomerEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={CompanyTitle} />
         </ReferenceArrayInput>
-        <BooleanInput label="isVerified" source="isVerified" />
         <TextInput label="lastName" source="lastName" />
         <ReferenceArrayInput
           source="lastSeenCompanies"
