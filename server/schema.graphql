@@ -62,6 +62,11 @@ input BooleanFilter {
   not: Boolean
 }
 
+input BooleanNullableFilter {
+  equals: Boolean
+  not: Boolean
+}
+
 type Company {
   address: Address
   companySetNotifications(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): [CompanySetNotification!]!
@@ -74,6 +79,7 @@ type Company {
   name: String!
   owner: Customer
   phoneNumber: String!
+  reservations(orderBy: [ReservationOrderByInput!], skip: Float, take: Float, where: ReservationWhereInput): [Reservation!]!
   timeSlots(orderBy: [TimeSlotOrderByInput!], skip: Float, take: Float, where: TimeSlotWhereInput): [TimeSlot!]!
   updatedAt: DateTime!
   vatCode: String!
@@ -82,13 +88,14 @@ type Company {
 input CompanyCreateInput {
   address: AddressWhereUniqueInput!
   companySetNotifications: CompanySetNotificationCreateNestedManyWithoutCompaniesInput
-  companyType: CompanyTypeWhereUniqueInput
+  companyType: CompanyTypeWhereUniqueInput!
   favoriteCompanies: FavoriteCompanyCreateNestedManyWithoutCompaniesInput
   lastSeenCompanies: LastSeenCompanyCreateNestedManyWithoutCompaniesInput
   logo: String
   name: String!
   owner: CustomerWhereUniqueInput!
   phoneNumber: String!
+  reservations: ReservationCreateNestedManyWithoutCompaniesInput
   timeSlots: TimeSlotCreateNestedManyWithoutCompaniesInput
   vatCode: String!
 }
@@ -127,16 +134,16 @@ input CompanyOrderByInput {
 type CompanySetNotification {
   company: Company
   createdAt: DateTime!
+  customText: String
   id: String!
   notification: Notification
-  timeSlot: TimeSlot
   updatedAt: DateTime!
 }
 
 input CompanySetNotificationCreateInput {
   company: CompanyWhereUniqueInput!
+  customText: String
   notification: NotificationWhereUniqueInput!
-  timeSlot: TimeSlotWhereUniqueInput
 }
 
 input CompanySetNotificationCreateNestedManyWithoutCompaniesInput {
@@ -144,10 +151,6 @@ input CompanySetNotificationCreateNestedManyWithoutCompaniesInput {
 }
 
 input CompanySetNotificationCreateNestedManyWithoutNotificationsInput {
-  connect: [CompanySetNotificationWhereUniqueInput!]
-}
-
-input CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput {
   connect: [CompanySetNotificationWhereUniqueInput!]
 }
 
@@ -160,16 +163,16 @@ input CompanySetNotificationListRelationFilter {
 input CompanySetNotificationOrderByInput {
   companyId: SortOrder
   createdAt: SortOrder
+  customText: SortOrder
   id: SortOrder
   notificationId: SortOrder
-  timeSlotId: SortOrder
   updatedAt: SortOrder
 }
 
 input CompanySetNotificationUpdateInput {
   company: CompanyWhereUniqueInput
+  customText: String
   notification: NotificationWhereUniqueInput
-  timeSlot: TimeSlotWhereUniqueInput
 }
 
 input CompanySetNotificationUpdateManyWithoutCompaniesInput {
@@ -184,17 +187,11 @@ input CompanySetNotificationUpdateManyWithoutNotificationsInput {
   set: [CompanySetNotificationWhereUniqueInput!]
 }
 
-input CompanySetNotificationUpdateManyWithoutTimeSlotsInput {
-  connect: [CompanySetNotificationWhereUniqueInput!]
-  disconnect: [CompanySetNotificationWhereUniqueInput!]
-  set: [CompanySetNotificationWhereUniqueInput!]
-}
-
 input CompanySetNotificationWhereInput {
   company: CompanyWhereUniqueInput
+  customText: StringNullableFilter
   id: StringFilter
   notification: NotificationWhereUniqueInput
-  timeSlot: TimeSlotWhereUniqueInput
 }
 
 input CompanySetNotificationWhereUniqueInput {
@@ -251,6 +248,7 @@ input CompanyUpdateInput {
   name: String
   owner: CustomerWhereUniqueInput
   phoneNumber: String
+  reservations: ReservationUpdateManyWithoutCompaniesInput
   timeSlots: TimeSlotUpdateManyWithoutCompaniesInput
   vatCode: String
 }
@@ -284,6 +282,7 @@ input CompanyWhereInput {
   name: StringFilter
   owner: CustomerWhereUniqueInput
   phoneNumber: StringFilter
+  reservations: ReservationListRelationFilter
   timeSlots: TimeSlotListRelationFilter
   vatCode: StringFilter
 }
@@ -304,6 +303,7 @@ type Customer {
   firstName: String!
   handledCompanies(orderBy: [CompanyOrderByInput!], skip: Float, take: Float, where: CompanyWhereInput): [Company!]!
   id: String!
+  isVerified: Boolean
   lastName: String!
   lastSeenCompanies(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): [LastSeenCompany!]!
   phoneNumber: String
@@ -316,6 +316,7 @@ input CustomerCreateInput {
   favoriteCompanies: FavoriteCompanyCreateNestedManyWithoutCustomersInput
   firstName: String!
   handledCompanies: CompanyCreateNestedManyWithoutCustomersInput
+  isVerified: Boolean
   lastName: String!
   lastSeenCompanies: LastSeenCompanyCreateNestedManyWithoutCustomersInput
   phoneNumber: String
@@ -327,6 +328,7 @@ input CustomerOrderByInput {
   email: SortOrder
   firstName: SortOrder
   id: SortOrder
+  isVerified: SortOrder
   lastName: SortOrder
   phoneNumber: SortOrder
   updatedAt: SortOrder
@@ -337,6 +339,7 @@ input CustomerUpdateInput {
   favoriteCompanies: FavoriteCompanyUpdateManyWithoutCustomersInput
   firstName: String
   handledCompanies: CompanyUpdateManyWithoutCustomersInput
+  isVerified: Boolean
   lastName: String
   lastSeenCompanies: LastSeenCompanyUpdateManyWithoutCustomersInput
   phoneNumber: String
@@ -349,6 +352,7 @@ input CustomerWhereInput {
   firstName: StringFilter
   handledCompanies: CompanyListRelationFilter
   id: StringFilter
+  isVerified: BooleanNullableFilter
   lastName: StringFilter
   lastSeenCompanies: LastSeenCompanyListRelationFilter
   phoneNumber: StringNullableFilter
@@ -375,44 +379,14 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
-type DayOfWeek {
-  code: String!
-  createdAt: DateTime!
-  description: String!
-  id: String!
-  timeSlots(orderBy: [TimeSlotOrderByInput!], skip: Float, take: Float, where: TimeSlotWhereInput): [TimeSlot!]!
-  updatedAt: DateTime!
-}
-
-input DayOfWeekCreateInput {
-  code: String!
-  description: String!
-  timeSlots: TimeSlotCreateNestedManyWithoutDayOfWeeksInput
-}
-
-input DayOfWeekOrderByInput {
-  code: SortOrder
-  createdAt: SortOrder
-  description: SortOrder
-  id: SortOrder
-  updatedAt: SortOrder
-}
-
-input DayOfWeekUpdateInput {
-  code: String
-  description: String
-  timeSlots: TimeSlotUpdateManyWithoutDayOfWeeksInput
-}
-
-input DayOfWeekWhereInput {
-  code: StringFilter
-  description: StringFilter
-  id: StringFilter
-  timeSlots: TimeSlotListRelationFilter
-}
-
-input DayOfWeekWhereUniqueInput {
-  id: String!
+enum EnumTimeSlotDayOfWeek {
+  Friday
+  Monday
+  Saturday
+  Sunday
+  Thursday
+  Tuesday
+  Wednesday
 }
 
 type FavoriteCompany {
@@ -571,7 +545,6 @@ type Mutation {
   createCompanySetNotification(data: CompanySetNotificationCreateInput!): CompanySetNotification!
   createCompanyType(data: CompanyTypeCreateInput!): CompanyType!
   createCustomer(data: CustomerCreateInput!): Customer!
-  createDayOfWeek(data: DayOfWeekCreateInput!): DayOfWeek!
   createFavoriteCompany(data: FavoriteCompanyCreateInput!): FavoriteCompany!
   createLastSeenCompany(data: LastSeenCompanyCreateInput!): LastSeenCompany!
   createNotification(data: NotificationCreateInput!): Notification!
@@ -585,7 +558,6 @@ type Mutation {
   deleteCompanySetNotification(where: CompanySetNotificationWhereUniqueInput!): CompanySetNotification!
   deleteCompanyType(where: CompanyTypeWhereUniqueInput!): CompanyType!
   deleteCustomer(where: CustomerWhereUniqueInput!): Customer!
-  deleteDayOfWeek(where: DayOfWeekWhereUniqueInput!): DayOfWeek!
   deleteFavoriteCompany(where: FavoriteCompanyWhereUniqueInput!): FavoriteCompany!
   deleteLastSeenCompany(where: LastSeenCompanyWhereUniqueInput!): LastSeenCompany!
   deleteNotification(where: NotificationWhereUniqueInput!): Notification!
@@ -600,7 +572,6 @@ type Mutation {
   updateCompanySetNotification(data: CompanySetNotificationUpdateInput!, where: CompanySetNotificationWhereUniqueInput!): CompanySetNotification!
   updateCompanyType(data: CompanyTypeUpdateInput!, where: CompanyTypeWhereUniqueInput!): CompanyType!
   updateCustomer(data: CustomerUpdateInput!, where: CustomerWhereUniqueInput!): Customer!
-  updateDayOfWeek(data: DayOfWeekUpdateInput!, where: DayOfWeekWhereUniqueInput!): DayOfWeek!
   updateFavoriteCompany(data: FavoriteCompanyUpdateInput!, where: FavoriteCompanyWhereUniqueInput!): FavoriteCompany!
   updateLastSeenCompany(data: LastSeenCompanyUpdateInput!, where: LastSeenCompanyWhereUniqueInput!): LastSeenCompany!
   updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification!
@@ -656,7 +627,6 @@ type Query {
   _companySetNotificationsMeta(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): MetaQueryPayload!
   _companyTypesMeta(orderBy: [CompanyTypeOrderByInput!], skip: Float, take: Float, where: CompanyTypeWhereInput): MetaQueryPayload!
   _customersMeta(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): MetaQueryPayload!
-  _dayOfWeeksMeta(orderBy: [DayOfWeekOrderByInput!], skip: Float, take: Float, where: DayOfWeekWhereInput): MetaQueryPayload!
   _favoriteCompaniesMeta(orderBy: [FavoriteCompanyOrderByInput!], skip: Float, take: Float, where: FavoriteCompanyWhereInput): MetaQueryPayload!
   _lastSeenCompaniesMeta(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): MetaQueryPayload!
   _notificationsMeta(orderBy: [NotificationOrderByInput!], skip: Float, take: Float, where: NotificationWhereInput): MetaQueryPayload!
@@ -675,8 +645,6 @@ type Query {
   companyTypes(orderBy: [CompanyTypeOrderByInput!], skip: Float, take: Float, where: CompanyTypeWhereInput): [CompanyType!]!
   customer(where: CustomerWhereUniqueInput!): Customer
   customers(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): [Customer!]!
-  dayOfWeek(where: DayOfWeekWhereUniqueInput!): DayOfWeek
-  dayOfWeeks(orderBy: [DayOfWeekOrderByInput!], skip: Float, take: Float, where: DayOfWeekWhereInput): [DayOfWeek!]!
   favoriteCompanies(orderBy: [FavoriteCompanyOrderByInput!], skip: Float, take: Float, where: FavoriteCompanyWhereInput): [FavoriteCompany!]!
   favoriteCompany(where: FavoriteCompanyWhereUniqueInput!): FavoriteCompany
   lastSeenCompanies(orderBy: [LastSeenCompanyOrderByInput!], skip: Float, take: Float, where: LastSeenCompanyWhereInput): [LastSeenCompany!]!
@@ -773,18 +741,26 @@ input ReservableSlotWhereUniqueInput {
 }
 
 type Reservation {
+  company: Company
   createdAt: DateTime!
   customer: Customer
   id: String!
+  isAccepted: Boolean
   reservableSlot: ReservableSlot
   reservationNotifications(orderBy: [ReservationNotificationOrderByInput!], skip: Float, take: Float, where: ReservationNotificationWhereInput): [ReservationNotification!]!
   updatedAt: DateTime!
 }
 
 input ReservationCreateInput {
+  company: CompanyWhereUniqueInput
   customer: CustomerWhereUniqueInput!
+  isAccepted: Boolean
   reservableSlot: ReservableSlotWhereUniqueInput
   reservationNotifications: ReservationNotificationCreateNestedManyWithoutReservationsInput
+}
+
+input ReservationCreateNestedManyWithoutCompaniesInput {
+  connect: [ReservationWhereUniqueInput!]
 }
 
 input ReservationCreateNestedManyWithoutCustomersInput {
@@ -803,6 +779,7 @@ input ReservationListRelationFilter {
 
 type ReservationNotification {
   createdAt: DateTime!
+  customText: String
   id: String!
   notification: Notification
   reservation: Reservation
@@ -810,6 +787,7 @@ type ReservationNotification {
 }
 
 input ReservationNotificationCreateInput {
+  customText: String
   notification: NotificationWhereUniqueInput!
   reservation: ReservationWhereUniqueInput!
 }
@@ -830,6 +808,7 @@ input ReservationNotificationListRelationFilter {
 
 input ReservationNotificationOrderByInput {
   createdAt: SortOrder
+  customText: SortOrder
   id: SortOrder
   notificationId: SortOrder
   reservationId: SortOrder
@@ -837,6 +816,7 @@ input ReservationNotificationOrderByInput {
 }
 
 input ReservationNotificationUpdateInput {
+  customText: String
   notification: NotificationWhereUniqueInput
   reservation: ReservationWhereUniqueInput
 }
@@ -854,6 +834,7 @@ input ReservationNotificationUpdateManyWithoutReservationsInput {
 }
 
 input ReservationNotificationWhereInput {
+  customText: StringNullableFilter
   id: StringFilter
   notification: NotificationWhereUniqueInput
   reservation: ReservationWhereUniqueInput
@@ -864,17 +845,27 @@ input ReservationNotificationWhereUniqueInput {
 }
 
 input ReservationOrderByInput {
+  companyId: SortOrder
   createdAt: SortOrder
   customerId: SortOrder
   id: SortOrder
+  isAccepted: SortOrder
   reservableSlotId: SortOrder
   updatedAt: SortOrder
 }
 
 input ReservationUpdateInput {
+  company: CompanyWhereUniqueInput
   customer: CustomerWhereUniqueInput
+  isAccepted: Boolean
   reservableSlot: ReservableSlotWhereUniqueInput
   reservationNotifications: ReservationNotificationUpdateManyWithoutReservationsInput
+}
+
+input ReservationUpdateManyWithoutCompaniesInput {
+  connect: [ReservationWhereUniqueInput!]
+  disconnect: [ReservationWhereUniqueInput!]
+  set: [ReservationWhereUniqueInput!]
 }
 
 input ReservationUpdateManyWithoutCustomersInput {
@@ -890,8 +881,10 @@ input ReservationUpdateManyWithoutReservableSlotsInput {
 }
 
 input ReservationWhereInput {
+  company: CompanyWhereUniqueInput
   customer: CustomerWhereUniqueInput
   id: StringFilter
+  isAccepted: BooleanNullableFilter
   reservableSlot: ReservableSlotWhereUniqueInput
   reservationNotifications: ReservationNotificationListRelationFilter
 }
@@ -936,33 +929,27 @@ input StringNullableFilter {
 }
 
 type TimeSlot {
-  availabilities(orderBy: [ReservableSlotOrderByInput!], skip: Float, take: Float, where: ReservableSlotWhereInput): [ReservableSlot!]!
   company: Company
   createdAt: DateTime!
-  dayOfWeek: DayOfWeek
+  dayOfWeek: EnumTimeSlotDayOfWeek
   id: String!
-  maxSeatsAvailable: Float!
+  maxSeatsAvailable: Float
+  reservableSlots(orderBy: [ReservableSlotOrderByInput!], skip: Float, take: Float, where: ReservableSlotWhereInput): [ReservableSlot!]!
   timeFrom: String!
-  timeSlotNotifications(orderBy: [CompanySetNotificationOrderByInput!], skip: Float, take: Float, where: CompanySetNotificationWhereInput): [CompanySetNotification!]!
   timeTo: String!
   updatedAt: DateTime!
 }
 
 input TimeSlotCreateInput {
-  availabilities: ReservableSlotCreateNestedManyWithoutTimeSlotsInput
   company: CompanyWhereUniqueInput!
-  dayOfWeek: DayOfWeekWhereUniqueInput
-  maxSeatsAvailable: Float!
+  dayOfWeek: EnumTimeSlotDayOfWeek
+  maxSeatsAvailable: Float
+  reservableSlots: ReservableSlotCreateNestedManyWithoutTimeSlotsInput
   timeFrom: String!
-  timeSlotNotifications: CompanySetNotificationCreateNestedManyWithoutTimeSlotsInput
   timeTo: String!
 }
 
 input TimeSlotCreateNestedManyWithoutCompaniesInput {
-  connect: [TimeSlotWhereUniqueInput!]
-}
-
-input TimeSlotCreateNestedManyWithoutDayOfWeeksInput {
   connect: [TimeSlotWhereUniqueInput!]
 }
 
@@ -975,7 +962,7 @@ input TimeSlotListRelationFilter {
 input TimeSlotOrderByInput {
   companyId: SortOrder
   createdAt: SortOrder
-  dayOfWeekId: SortOrder
+  dayOfWeek: SortOrder
   id: SortOrder
   maxSeatsAvailable: SortOrder
   timeFrom: SortOrder
@@ -984,12 +971,11 @@ input TimeSlotOrderByInput {
 }
 
 input TimeSlotUpdateInput {
-  availabilities: ReservableSlotUpdateManyWithoutTimeSlotsInput
   company: CompanyWhereUniqueInput
-  dayOfWeek: DayOfWeekWhereUniqueInput
+  dayOfWeek: EnumTimeSlotDayOfWeek
   maxSeatsAvailable: Float
+  reservableSlots: ReservableSlotUpdateManyWithoutTimeSlotsInput
   timeFrom: String
-  timeSlotNotifications: CompanySetNotificationUpdateManyWithoutTimeSlotsInput
   timeTo: String
 }
 
@@ -999,20 +985,13 @@ input TimeSlotUpdateManyWithoutCompaniesInput {
   set: [TimeSlotWhereUniqueInput!]
 }
 
-input TimeSlotUpdateManyWithoutDayOfWeeksInput {
-  connect: [TimeSlotWhereUniqueInput!]
-  disconnect: [TimeSlotWhereUniqueInput!]
-  set: [TimeSlotWhereUniqueInput!]
-}
-
 input TimeSlotWhereInput {
-  availabilities: ReservableSlotListRelationFilter
   company: CompanyWhereUniqueInput
-  dayOfWeek: DayOfWeekWhereUniqueInput
+  dayOfWeek: EnumTimeSlotDayOfWeek
   id: StringFilter
-  maxSeatsAvailable: IntFilter
+  maxSeatsAvailable: IntNullableFilter
+  reservableSlots: ReservableSlotListRelationFilter
   timeFrom: StringFilter
-  timeSlotNotifications: CompanySetNotificationListRelationFilter
   timeTo: StringFilter
 }
 
