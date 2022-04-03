@@ -6,10 +6,10 @@ import {
   ShowProps,
   DateField,
   TextField,
-  BooleanField,
   ReferenceManyField,
   Datagrid,
   ReferenceField,
+  BooleanField,
 } from "react-admin";
 
 import { COMPANY_TITLE_FIELD } from "../company/CompanyTitle";
@@ -26,7 +26,6 @@ export const CustomerShow = (props: ShowProps): React.ReactElement => {
         <TextField label="email" source="email" />
         <TextField label="firstName" source="firstName" />
         <TextField label="ID" source="id" />
-        <BooleanField label="isVerified" source="isVerified" />
         <TextField label="lastName" source="lastName" />
         <TextField label="phoneNumber" source="phoneNumber" />
         <DateField source="updatedAt" label="Updated At" />
