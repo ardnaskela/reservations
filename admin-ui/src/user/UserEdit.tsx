@@ -16,6 +16,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
         <PasswordInput label="Password" source="password" />
+        <TextInput label="Phone Number" source="phoneNumber" />
         <SelectArrayInput
           source="roles"
           choices={ROLES_OPTIONS}
