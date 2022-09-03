@@ -15,10 +15,10 @@ import * as apollo from "apollo-server-express";
 import * as nestAccessControl from "nest-access-control";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
-import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
-import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateCompanySetNotificationArgs } from "./CreateCompanySetNotificationArgs";
 import { UpdateCompanySetNotificationArgs } from "./UpdateCompanySetNotificationArgs";
 import { DeleteCompanySetNotificationArgs } from "./DeleteCompanySetNotificationArgs";
@@ -56,6 +56,7 @@ export class CompanySetNotificationResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [CompanySetNotification])
   @nestAccessControl.UseRoles({
     resource: "CompanySetNotification",
@@ -63,19 +64,12 @@ export class CompanySetNotificationResolverBase {
     possession: "any",
   })
   async companySetNotifications(
-    @graphql.Args() args: CompanySetNotificationFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: CompanySetNotificationFindManyArgs
   ): Promise<CompanySetNotification[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "CompanySetNotification",
-    });
-    const results = await this.service.findMany(args);
-    return results.map((result) => permission.filter(result));
+    return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => CompanySetNotification, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "CompanySetNotification",
@@ -83,22 +77,16 @@ export class CompanySetNotificationResolverBase {
     possession: "own",
   })
   async companySetNotification(
-    @graphql.Args() args: CompanySetNotificationFindUniqueArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: CompanySetNotificationFindUniqueArgs
   ): Promise<CompanySetNotification | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "own",
-      resource: "CompanySetNotification",
-    });
     const result = await this.service.findOne(args);
     if (result === null) {
       return null;
     }
-    return permission.filter(result);
+    return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => CompanySetNotification)
   @nestAccessControl.UseRoles({
     resource: "CompanySetNotification",
@@ -106,31 +94,8 @@ export class CompanySetNotificationResolverBase {
     possession: "any",
   })
   async createCompanySetNotification(
-    @graphql.Args() args: CreateCompanySetNotificationArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: CreateCompanySetNotificationArgs
   ): Promise<CompanySetNotification> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "create",
-      possession: "any",
-      resource: "CompanySetNotification",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(
-      permission,
-      args.data
-    );
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"CompanySetNotification"} creation is forbidden for roles: ${roles}`
-      );
-    }
-    // @ts-ignore
     return await this.service.create({
       ...args,
       data: {
@@ -147,6 +112,7 @@ export class CompanySetNotificationResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => CompanySetNotification)
   @nestAccessControl.UseRoles({
     resource: "CompanySetNotification",
@@ -154,32 +120,9 @@ export class CompanySetNotificationResolverBase {
     possession: "any",
   })
   async updateCompanySetNotification(
-    @graphql.Args() args: UpdateCompanySetNotificationArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: UpdateCompanySetNotificationArgs
   ): Promise<CompanySetNotification | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "CompanySetNotification",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(
-      permission,
-      args.data
-    );
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"CompanySetNotification"} update is forbidden for roles: ${roles}`
-      );
-    }
     try {
-      // @ts-ignore
       return await this.service.update({
         ...args,
         data: {
@@ -214,7 +157,6 @@ export class CompanySetNotificationResolverBase {
     @graphql.Args() args: DeleteCompanySetNotificationArgs
   ): Promise<CompanySetNotification | null> {
     try {
-      // @ts-ignore
       return await this.service.delete(args);
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -226,51 +168,39 @@ export class CompanySetNotificationResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Company, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "CompanySetNotification",
+    resource: "Company",
     action: "read",
     possession: "any",
   })
   async company(
-    @graphql.Parent() parent: CompanySetNotification,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Parent() parent: CompanySetNotification
   ): Promise<Company | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Company",
-    });
     const result = await this.service.getCompany(parent.id);
 
     if (!result) {
       return null;
     }
-    return permission.filter(result);
+    return result;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Notification, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "CompanySetNotification",
+    resource: "Notification",
     action: "read",
     possession: "any",
   })
   async notification(
-    @graphql.Parent() parent: CompanySetNotification,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Parent() parent: CompanySetNotification
   ): Promise<Notification | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Notification",
-    });
     const result = await this.service.getNotification(parent.id);
 
     if (!result) {
       return null;
     }
-    return permission.filter(result);
+    return result;
   }
 }
